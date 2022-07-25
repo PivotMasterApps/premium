@@ -26,6 +26,18 @@ object Premium {
         initializeBilling()
     }
 
+    fun showPrivacyActivity() {
+        mContext?.startActivity(
+            Intent(mContext, OptinActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+        )
+    }
+
+    fun optinFinished() {
+        //go to next activity
+    }
+
     fun showPremium() {
         mContext?.startActivity(
             Intent(mContext, PremiumActivity::class.java).apply {

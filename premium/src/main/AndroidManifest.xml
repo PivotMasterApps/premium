@@ -12,6 +12,10 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false" />
 
+        <activity android:name=".OptinActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:exported="false"/>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id"/>

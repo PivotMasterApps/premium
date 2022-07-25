@@ -16,5 +16,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.premium_btn).setOnClickListener {
             Premium.showPremium()
         }
+
+        findViewById<Button>(R.id.privacy_policy).setOnClickListener {
+            Premium.showPrivacyActivity()
+        }
     }
 }

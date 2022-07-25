@@ -16,4 +16,6 @@
     <string name="feature_2">Some feature 2</string>
     <string name="feature_3">Some feature 3</string>
     <string name="premium_text">LightBox Plus</string>
+    <string name="optin_activity_title">LightBox</string>
+    <string name="eule_text"> Please read and accept our <![CDATA[ <a href="https://pivotmasterapps.github.io/privacy/">Privacy Policy</a>]]> and <![CDATA[<a href="https://pivotmasterapps.github.io/terms/">Terms Of Use</a>]]> before proceeding.</string>
 </resources>

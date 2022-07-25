@@ -7,7 +7,9 @@
         <entry key="premium/src/main/res/drawable/exit_btn.xml" value="0.186" />
         <entry key="premium/src/main/res/drawable/ic_baseline_check_24.xml" value="0.186" />
         <entry key="premium/src/main/res/drawable/ic_baseline_close_24.xml" value="0.186" />
+        <entry key="premium/src/main/res/drawable/option_main_asset.xml" value="0.259" />
         <entry key="premium/src/main/res/drawable/ripple_with_goplus_btn_bg.xml" value="0.186" />
+        <entry key="premium/src/main/res/layout/activity_optin.xml" value="0.35" />
         <entry key="premium/src/main/res/layout/activity_splash.xml" value="0.3375" />
         <entry key="premium/src/main/res/layout/custom_primium_dialog.xml" value="0.28817291259765626" />
       </map>

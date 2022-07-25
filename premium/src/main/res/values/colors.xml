@@ -3,4 +3,6 @@
 
     <color name="premium_background">#323232</color>
     <color name="premium_text_color">#E6E6E6</color>
+    <color name="optin_background">#414141</color>
+    <color name="option_cta">#4CAF50</color>
 </resources>

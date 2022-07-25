@@ -13,19 +13,17 @@
         android:id="@+id/interstitial_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Load interstitial!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Load interstitial!" />
 
     <Button
         android:id="@+id/premium_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show premium"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Show premium" />
+
+    <Button
+        android:id="@+id/privacy_policy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Privacy Policy" />
 </LinearLayout>
