@@ -34,6 +34,7 @@ class OptinActivity: AppCompatActivity() {
 
     fun endActivity() {
         Premium.optinFinished()
+        finish()
     }
 
     override fun onBackPressed() {

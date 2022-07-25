@@ -9,6 +9,6 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         FirebaseApp.initializeApp(this)
-        Premium.initialize(this)
+        Premium.initialize(this, MainActivity::class.java)
     }
 }

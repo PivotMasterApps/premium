@@ -61,7 +61,7 @@ class PremiumActivity : AppCompatActivity() {
             })
 
         findViewById<AppCompatImageView>(R.id.premium_close).setOnClickListener {
-            Premium.showInterstitial(this) { finish() }
+            Premium.showInterstitial(this) { endActivity() }
         }
 
         findViewById<View>(R.id.premium_one_time).setOnClickListener {
@@ -69,19 +69,24 @@ class PremiumActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.continue_free_btn).setOnClickListener {
-            Premium.showInterstitial(this) { finish() }
+            Premium.showInterstitial(this) { endActivity() }
         }
 
         Premium.mIsPremium.observe(this) {
             if(it == true) {
                 Toast.makeText(this, getString(R.string.premium_toast_success), Toast.LENGTH_SHORT).show()
-                finish()
+                endActivity()
             }
         }
     }
 
+    fun endActivity() {
+        Premium.premiumFinished()
+        finish()
+    }
+
     fun onError() {
         Toast.makeText(this, getString(R.string.premium_something_wrong), Toast.LENGTH_LONG).show()
-        finish()
+        endActivity()
     }
 }

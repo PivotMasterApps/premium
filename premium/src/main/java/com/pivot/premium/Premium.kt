@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.preference.PreferenceManager
 import androidx.lifecycle.MutableLiveData
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.PurchaseInfo
@@ -15,12 +16,17 @@ import com.pivot.premium.purchases.PremiumActivity
 object Premium {
 
     private var mContext: Context? = null
+    lateinit  var mMainActivity: Class<out Activity>
     var mBillingProcessor: BillingProcessor? = null
     val mIsPremium =  MutableLiveData(false)
 
-    fun initialize(context: Context) {
+    fun initialize(
+        context: Context,
+        mainActivity: Class<out Activity>
+    ) {
         if(mContext != null) return
 
+        mMainActivity = mainActivity
         mContext = context
         AdManager.initialize(context)
         initializeBilling()
@@ -34,8 +40,34 @@ object Premium {
         )
     }
 
+    fun premiumFinished() {
+        //Go to apps main activity
+        mContext?.startActivity(
+            Intent(mContext!!, mMainActivity).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+        )
+    }
+
     fun optinFinished() {
         //go to next activity
+        PreferenceManager.getDefaultSharedPreferences(mContext!!).apply {
+            val opens = getInt("app_opens", 0)
+            if(listOf(0,1,3,5).contains(opens)) {
+                showPremium()
+            } else {
+                premiumFinished()
+            }
+            edit().putInt("app_opens", opens + 1).apply()
+        }
+    }
+
+    fun splashFinished() {
+        if(OptinActivity.isAccepted(mContext!!)) {
+            optinFinished()
+        } else {
+            showPrivacyActivity()
+        }
     }
 
     fun showPremium() {
