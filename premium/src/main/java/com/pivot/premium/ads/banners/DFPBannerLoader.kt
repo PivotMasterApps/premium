@@ -1,13 +1,12 @@
-package com.photosedge.ads
+package com.pivot.premium.ads.banners
 
 import android.content.Context
 import android.content.res.Resources
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.ads.*
-import com.pivot.premium.ads.AdLoadingState
 
 class DFPBannerLoader(
-    val context: Context
+    private val context: Context
 ) {
 
     private val adState = MutableLiveData<AdLoadingState?>(AdLoadingState.Loading(this))

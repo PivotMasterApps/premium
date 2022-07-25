@@ -1,4 +1,4 @@
-package com.pivot.premium
+package com.pivot.premium.purchases
 
 import androidx.lifecycle.ViewModel
 import com.pivot.premium.Premium

@@ -11,6 +11,8 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.pivot.premium.R
+import com.pivot.premium.getConfig
+import com.pivot.premium.sendEvent
 
 private const val TAG = "AdmobInterstitial"
 class AdmobInterstitial (
@@ -28,7 +30,7 @@ class AdmobInterstitial (
         Log.d(TAG, "Loading interstitial")
         val adRequest = AdRequest.Builder().build()
         mIsLoading = true
-        InterstitialAd.load(context,"ca-app-pub-7194429227078261/3868795307", adRequest, object : InterstitialAdLoadCallback() {
+        InterstitialAd.load(context,context.getString(R.string.interstitial_key), adRequest, object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 Log.d(TAG, "onAdFailedToLoad:${adError.message} ")
                 context.sendEvent("interstitial_failed")

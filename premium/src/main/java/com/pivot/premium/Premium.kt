@@ -9,6 +9,7 @@ import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.PurchaseInfo
 import com.google.android.gms.ads.MobileAds
 import com.pivot.premium.ads.AdManager
+import com.pivot.premium.purchases.PremiumActivity
 
 @SuppressLint("StaticFieldLeak")
 object Premium {

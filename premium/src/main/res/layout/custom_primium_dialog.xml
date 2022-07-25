@@ -42,31 +42,46 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
-        android:text=""
+        android:text="TRY FOR FREE"
         android:textColor="#fff"
+        android:paddingVertical="12dp"
+        android:textSize="16sp"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/continue_free_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/ripple_with_goplus_btn_bg"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:id="@+id/continue_free_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Continue with the free version"
+        android:text="Go to the free version"
         android:layout_marginBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <TextView
+        android:id="@+id/pricing_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textColor="#989898"
+        android:gravity="center"
+        android:foregroundGravity="center"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/premium_one_time"/>
+
     <ProgressBar
         android:id="@+id/premium_pb_one_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:translationZ="200dp"
-        app:layout_constraintTop_toTopOf="@id/premium_one_time"
-        app:layout_constraintBottom_toBottomOf="@id/premium_one_time"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/premium_one_time"
         app:layout_constraintEnd_toEndOf="@id/premium_one_time"
         app:layout_constraintStart_toStartOf="@id/premium_one_time"/>
 
@@ -78,7 +93,7 @@
         app:layout_constraintTop_toBottomOf="@id/premium_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/premium_one_time">
+        app:layout_constraintBottom_toTopOf="@id/pricing_text">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

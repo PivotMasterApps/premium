@@ -1,6 +1,4 @@
-package com.pivot.premium.ads
-
-import com.photosedge.ads.DFPBannerLoader
+package com.pivot.premium.ads.banners
 
 sealed class AdLoadingState {
     data class Loading(val data: DFPBannerLoader) : AdLoadingState()

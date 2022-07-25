@@ -1,4 +1,4 @@
-package com.pivot.premium.ads
+package com.pivot.premium
 
 import android.content.Context
 import android.os.Bundle
