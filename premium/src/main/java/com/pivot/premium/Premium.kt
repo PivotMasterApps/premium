@@ -22,8 +22,7 @@ object Premium {
         if(mContext != null) return
 
         mContext = context
-        MobileAds.initialize(context)
-        AdManager.getInstance(context).initialize()
+        AdManager.initialize(context)
         initializeBilling()
     }
 
@@ -36,11 +35,11 @@ object Premium {
     }
 
     fun showRewarded(activity: Activity, onDismissed: (Boolean) -> Unit) {
-        AdManager.getInstance(activity).showRewarded(activity, onDismissed)
+        AdManager.showRewarded(activity, onDismissed)
     }
 
     fun showInterstitial(activity: Activity, onDismissed: (() -> Unit)? = null) {
-        AdManager.getInstance(activity).showInterstitial(activity, onDismissed)
+        AdManager.showInterstitial(activity, onDismissed)
     }
 
     private fun updateBillingState() {

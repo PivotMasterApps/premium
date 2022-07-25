@@ -1,5 +1,6 @@
 package com.pivot.premium.ads
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import com.google.android.gms.ads.AdSize
@@ -8,14 +9,18 @@ import com.google.firebase.FirebaseApp
 import com.pivot.premium.ads.banners.DFPBannerLoader
 
 private const val TAG = "AdManager"
+@SuppressLint("StaticFieldLeak")
+object AdManager {
 
-class AdManager private constructor(
-    val context: Context
-) {
-    private var interstitials: AdmobInterstitial = AdmobInterstitial(context)
-    private var rewardedAds: RewardedLoader = RewardedLoader(context)
+    private var mContext: Context? = null
+    lateinit var interstitials: AdmobInterstitial
+    lateinit var rewardedAds: RewardedLoader
 
-    fun initialize() {
+    fun initialize(context: Context) {
+        mContext = context
+        MobileAds.initialize(context)
+        interstitials = AdmobInterstitial(context)
+        rewardedAds = RewardedLoader(context)
         interstitials.loadAd()
         rewardedAds.loadAd()
     }
@@ -31,6 +36,4 @@ class AdManager private constructor(
     fun loadBanner(context: Context, adSize: AdSize) {
         DFPBannerLoader(context).loadAd(adSize)
     }
-
-    companion object : SingletonHolder<AdManager, Context>(::AdManager)
 }

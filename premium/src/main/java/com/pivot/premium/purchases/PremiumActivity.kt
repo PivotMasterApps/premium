@@ -61,7 +61,7 @@ class PremiumActivity : AppCompatActivity() {
             })
 
         findViewById<AppCompatImageView>(R.id.premium_close).setOnClickListener {
-            finish()
+            Premium.showInterstitial(this) { finish() }
         }
 
         findViewById<View>(R.id.premium_one_time).setOnClickListener {
@@ -69,7 +69,7 @@ class PremiumActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.continue_free_btn).setOnClickListener {
-            finish()
+            Premium.showInterstitial(this) { finish() }
         }
 
         Premium.mIsPremium.observe(this) {

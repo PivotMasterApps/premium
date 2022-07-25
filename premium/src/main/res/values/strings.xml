@@ -4,7 +4,7 @@
     <string name="premium_feature_2">Feature 2</string>
     <string name="premium_feature_1">Feature 1</string>
     <string name="premium_one_time_price">%1$s for lifetime</string>
-    <string name="premium_subscription_price_trial">%1$s days free, then %2$s/%3$s.\n Cancel anytime.</string>
+    <string name="premium_subscription_price_trial">%1$s days free, then %2$s/%3$s.</string>
     <string name="premium_subscription_price_no_trial">%1$s/%2$s</string>
     <string name="premium_gpc_key" />
     <string name="premium_toast_success">Purchase success</string>
@@ -15,4 +15,5 @@
     <string name="feature_1">Some feature</string>
     <string name="feature_2">Some feature 2</string>
     <string name="feature_3">Some feature 3</string>
+    <string name="premium_text">LightBox Plus</string>
 </resources>
