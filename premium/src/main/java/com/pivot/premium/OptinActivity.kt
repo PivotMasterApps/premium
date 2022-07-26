@@ -16,8 +16,6 @@ class OptinActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if(isAccepted(this)) endActivity()
-
         setContentView(R.layout.activity_optin)
 
         findViewById<TextView>(R.id.optin_eula).apply {

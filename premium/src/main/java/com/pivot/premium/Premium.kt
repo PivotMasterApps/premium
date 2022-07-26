@@ -144,8 +144,10 @@ object Premium {
     fun splashFinished() {
         if(OptinActivity.isAccepted(mContext!!)) {
             optinFinished()
-        } else {
+        } else if(!OptinActivity.isAccepted(mContext!!)){
             showPrivacyActivity()
+        } else {
+            optinFinished()
         }
     }
 
