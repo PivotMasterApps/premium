@@ -45,6 +45,8 @@ object Premium {
         initializeBilling()
     }
 
+    fun test(){}
+
     fun onAppOpen(activity: AppCompatActivity) {
         PreferenceManager.getDefaultSharedPreferences(mContext!!).apply {
             val opens = getInt("app_opens", 0)
