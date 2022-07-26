@@ -45,8 +45,8 @@ object Premium {
         initializeBilling()
     }
 
-    fun test() {
-
+    fun onAppClosed() {
+        mIsInAppOpenFlow = true
     }
 
     fun initializeLifecycle() {
