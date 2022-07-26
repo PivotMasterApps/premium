@@ -20,6 +20,7 @@ import com.suddenh4x.ratingdialog.AppRating
 import com.suddenh4x.ratingdialog.preferences.MailSettings
 import com.suddenh4x.ratingdialog.preferences.RatingThreshold
 
+private const val TAG = "Premium"
 @SuppressLint("StaticFieldLeak")
 object Premium {
 
@@ -73,6 +74,7 @@ object Premium {
     }
 
     fun showPremium() {
+        Log.d(TAG, "showPremium: ")
         mContext?.startActivity(
             Intent(mContext, PremiumActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -81,6 +83,7 @@ object Premium {
     }
 
     fun premiumFinished() {
+        Log.d(TAG, "premiumFinished: mIsInAppOpenFlow = $mIsInAppOpenFlow")
         //Go to apps main activity
         if(mIsInAppOpenFlow) {
             mContext?.startActivity(
@@ -94,6 +97,7 @@ object Premium {
     }
 
     fun showPrivacyActivity() {
+        Log.d(TAG, "showPrivacyActivity: ")
         mContext?.startActivity(
             Intent(mContext, OptinActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -102,6 +106,7 @@ object Premium {
     }
 
     fun optinFinished() {
+        Log.d(TAG, "optinFinished: ")
         if(mIsPremium.value == true) {
             premiumFinished()
             return
@@ -125,6 +130,7 @@ object Premium {
     }
 
     fun showRateUs(activity: AppCompatActivity) {
+        Log.d(TAG, "showRateUs: ")
         AppRating
                 .Builder(activity)
                 .setRatingThreshold(RatingThreshold.FOUR_AND_A_HALF)
@@ -147,6 +153,7 @@ object Premium {
     }
 
     fun splashFinished() {
+        Log.d(TAG, "splashFinished: ")
         if(OptinActivity.isAccepted(mContext!!)) {
             optinFinished()
         } else if(!OptinActivity.isAccepted(mContext!!)){
