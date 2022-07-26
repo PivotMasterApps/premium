@@ -45,6 +45,10 @@ object Premium {
         initializeBilling()
     }
 
+    fun test() {
+
+    }
+
     fun initializeLifecycle() {
         (mContext as Application).registerActivityLifecycleCallbacks(object:
             Application.ActivityLifecycleCallbacks {
@@ -57,6 +61,7 @@ object Premium {
                     }
                     whatToShowOnMainActivity = WhatToShow.NONE
                 }
+                mIsInAppOpenFlow = false
             }
             override fun onActivityStarted(p0: Activity) {}
             override fun onActivityResumed(p0: Activity) {}
