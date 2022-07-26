@@ -60,7 +60,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.pivotmaster'
                 artifactId = 'premium'
-                version = '1.0'
+                version = '1.0.0'
             }
         }
     }
