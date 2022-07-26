@@ -28,8 +28,7 @@ object Premium {
     lateinit  var mMainActivity: Class<out Activity>
     var mBillingProcessor: BillingProcessor? = null
     val mIsPremium =  MutableLiveData(false)
-    private var mIsInAppOpenFlow = true
-    private var whatToShowOnMainActivity = WhatToShow.NONE
+    var onDismissed: (() -> Unit)? = null
 
     enum class WhatToShow {NONE, INTERSTITIAL, RATING}
 
@@ -46,23 +45,36 @@ object Premium {
         initializeBilling()
     }
 
-    fun onAppClosed() {
-        mIsInAppOpenFlow = true
+    fun onAppOpen(activity: AppCompatActivity) {
+        PreferenceManager.getDefaultSharedPreferences(mContext!!).apply {
+            val opens = getInt("app_opens", 0)
+            if(listOf(0,2,5).contains(opens)) {
+                showPremium()
+            } else if( opens % 3 == 0 &&
+                !AppRating.isDialogAgreed(mContext!!) &&
+                !AppRating.wasNeverButtonClicked(mContext!!)) {
+                showRateUs(activity)
+            } else {
+                showInterstitial(activity)
+            }
+            edit().putInt("app_opens", opens + 1).apply()
+        }
     }
 
     fun initializeLifecycle() {
         (mContext as Application).registerActivityLifecycleCallbacks(object:
             Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, p1: Bundle?) {
+
                 if(mMainActivity.simpleName == activity::class.java.simpleName) {
-                    if(whatToShowOnMainActivity == WhatToShow.RATING) {
-                        showRateUs(activity as AppCompatActivity)
-                    } else if(whatToShowOnMainActivity == WhatToShow.INTERSTITIAL) {
-                        showInterstitial(activity)
+                    if(!OptinActivity.isAccepted(activity)) {
+                        showPrivacyActivity {
+                            onAppOpen(activity as AppCompatActivity)
+                        }
+                    } else {
+                        onAppOpen(activity as AppCompatActivity)
                     }
-                    whatToShowOnMainActivity = WhatToShow.NONE
                 }
-                mIsInAppOpenFlow = false
             }
             override fun onActivityStarted(p0: Activity) {}
             override fun onActivityResumed(p0: Activity) {}
@@ -82,22 +94,8 @@ object Premium {
         )
     }
 
-    fun premiumFinished() {
-        Log.d(TAG, "premiumFinished: mIsInAppOpenFlow = $mIsInAppOpenFlow")
-        //Go to apps main activity
-        if(mIsInAppOpenFlow) {
-            mContext?.startActivity(
-                Intent(mContext!!, mMainActivity).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-            )
-        }
-
-        mIsInAppOpenFlow = false
-    }
-
-    fun showPrivacyActivity() {
-        Log.d(TAG, "showPrivacyActivity: ")
+    fun showPrivacyActivity(onDismissed: (() -> Unit)? = null) {
+        this.onDismissed = onDismissed
         mContext?.startActivity(
             Intent(mContext, OptinActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -107,26 +105,7 @@ object Premium {
 
     fun optinFinished() {
         Log.d(TAG, "optinFinished: ")
-        if(mIsPremium.value == true) {
-            premiumFinished()
-            return
-        }
-
-        PreferenceManager.getDefaultSharedPreferences(mContext!!).apply {
-            val opens = getInt("app_opens", 0)
-            if(listOf(0,2,5).contains(opens)) {
-                showPremium()
-            } else if( opens % 3 == 0 &&
-                !AppRating.isDialogAgreed(mContext!!) &&
-                !AppRating.wasNeverButtonClicked(mContext!!)) {
-                whatToShowOnMainActivity = WhatToShow.RATING
-                premiumFinished()
-            } else {
-                whatToShowOnMainActivity = WhatToShow.INTERSTITIAL
-                premiumFinished()
-            }
-            edit().putInt("app_opens", opens + 1).apply()
-        }
+        onDismissed?.invoke()
     }
 
     fun showRateUs(activity: AppCompatActivity) {
@@ -153,14 +132,11 @@ object Premium {
     }
 
     fun splashFinished() {
-        Log.d(TAG, "splashFinished: ")
-        if(OptinActivity.isAccepted(mContext!!)) {
-            optinFinished()
-        } else if(!OptinActivity.isAccepted(mContext!!)){
-            showPrivacyActivity()
-        } else {
-            optinFinished()
-        }
+        mContext?.startActivity(
+            Intent(mContext!!, mMainActivity).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+        )
     }
 
     fun showRewarded(activity: Activity, onDismissed: (Boolean) -> Unit) {

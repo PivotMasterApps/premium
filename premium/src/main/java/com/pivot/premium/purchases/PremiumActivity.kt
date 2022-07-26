@@ -81,7 +81,6 @@ class PremiumActivity : AppCompatActivity() {
     }
 
     fun endActivity() {
-        Premium.premiumFinished()
         finish()
     }
 
