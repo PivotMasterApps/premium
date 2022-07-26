@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/MySplashLayout"
     android:background="@color/premium_background"
     tools:context=".PremiumSplashActivity">
 
@@ -32,6 +33,7 @@
     <ProgressBar
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@id/premium_splash_name"
         app:layout_constraintStart_toStartOf="@id/premium_splash_name"
         app:layout_constraintEnd_toEndOf="@id/premium_splash_name"/>

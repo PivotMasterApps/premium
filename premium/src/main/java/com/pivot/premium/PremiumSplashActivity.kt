@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 @SuppressLint("CustomSplashScreen")
-class PremiumSplashActivity : AppCompatActivity() {
+open class PremiumSplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_premium_splash)
@@ -23,7 +23,7 @@ class PremiumSplashActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.premium_splash_ic).background = applicationInfo.loadIcon(packageManager)
 
         CoroutineScope(Dispatchers.Main).launch {
-            delay(getConfig("splash_delay", 3000))
+            delay(getConfig("splash_delay", 5000))
             Premium.splashFinished()
             finish()
         }

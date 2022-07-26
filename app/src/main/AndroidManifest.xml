@@ -14,14 +14,11 @@
         android:name=".App"
         android:theme="@style/Theme.PremiumLibrary"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
-            >
-
+        <activity android:name=".MainActivity">
         </activity>
 
         <activity android:name=".PremiumSplashActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:theme="@style/MySplashLayout"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

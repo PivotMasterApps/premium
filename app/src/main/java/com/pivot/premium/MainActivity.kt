@@ -20,5 +20,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.privacy_policy).setOnClickListener {
             Premium.showPrivacyActivity()
         }
+
+        findViewById<Button>(R.id.rating).setOnClickListener {
+            Premium.showRateUs(this)
+        }
     }
 }

@@ -5,4 +5,16 @@
     <color name="premium_text_color">#E6E6E6</color>
     <color name="optin_background">#414141</color>
     <color name="option_cta">#4CAF50</color>
+
+    <color name="colorAccent">#EC2045</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#9E9E9E</color>
+    <color name="strokeColor">#9E9E9E</color>
+    <color name="feedbackTextColor">#000000</color>
+    <color name="hintTextColor">#9E9E9E</color>
+    <color name="contentBackgroundColor">#FAFAFA</color>
+    <color name="textFieldColor">#FFFFFF</color>
+    <color name="buttonBackgroundColor">#FFFFFF</color>
+    <color name="ratingBarColor">#FFD600</color>
+    <color name="cardBackgroundColor">#FFFFFF</color>
 </resources>
