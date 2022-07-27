@@ -50,7 +50,7 @@ object Premium {
     fun onAppOpen(activity: AppCompatActivity) {
         PreferenceManager.getDefaultSharedPreferences(mContext!!).apply {
             val opens = getInt("app_opens", 0)
-            if(listOf(0,2,5).contains(opens)) {
+            if(mIsPremium.value == false && listOf(0,2,5).contains(opens)) {
                 showPremium()
             } else if( opens % 3 == 0 &&
                 !AppRating.isDialogAgreed(mContext!!) &&
@@ -129,11 +129,6 @@ object Premium {
             .showNow()
     }
 
-    fun onShowRateUsFinished(activity: Activity) {
-        showInterstitial(activity) {
-        }
-    }
-
     fun splashFinished() {
         mContext?.startActivity(
             Intent(mContext!!, mMainActivity).apply {
@@ -147,7 +142,9 @@ object Premium {
     }
 
     fun showInterstitial(activity: Activity, onDismissed: (() -> Unit)? = null) {
-        AdManager.showInterstitial(activity, onDismissed)
+        if(mIsPremium.value == false) {
+            AdManager.showInterstitial(activity, onDismissed)
+        }
     }
 
     private fun updateBillingState() {

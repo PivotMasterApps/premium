@@ -49,7 +49,7 @@ class PremiumActivity : AppCompatActivity() {
                                 resources.getString(
                                     R.string.premium_subscription_price_no_trial,
                                     it.priceText,
-                                    it.subscriptionPeriod[2]
+                                    if(it.subscriptionPeriod[2].equals('w', true)) "week" else "month"
                                 )
                         }
                     } ?: if(!BuildConfig.DEBUG) onError() else {}
