@@ -4,8 +4,8 @@
     <string name="premium_feature_2">Feature 2</string>
     <string name="premium_feature_1">Feature 1</string>
     <string name="premium_one_time_price">%1$s for lifetime</string>
-    <string name="premium_subscription_price_trial">%1$s days free, then %2$s/%3$s.</string>
-    <string name="premium_subscription_price_no_trial">%1$s/%2$s</string>
+    <string name="premium_subscription_price_trial">%1$s days free, then %2$s per %3$s.</string>
+    <string name="premium_subscription_price_no_trial">%1$s per %2$s</string>
     <string name="premium_gpc_key" />
     <string name="premium_toast_success">Purchase success</string>
     <string name="premium_something_wrong">Something went wrong</string>

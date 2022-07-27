@@ -56,8 +56,6 @@ object Premium {
                 !AppRating.isDialogAgreed(mContext!!) &&
                 !AppRating.wasNeverButtonClicked(mContext!!)) {
                 showRateUs(activity)
-            } else {
-                showInterstitial(activity)
             }
             edit().putInt("app_opens", opens + 1).apply()
         }
@@ -113,19 +111,22 @@ object Premium {
     fun showRateUs(activity: AppCompatActivity) {
         Log.d(TAG, "showRateUs: ")
         AppRating
-                .Builder(activity)
-                .setRatingThreshold(RatingThreshold.FOUR_AND_A_HALF)
-                .showRateNeverButtonAfterNTimes(R.string.rate_never, null, 2)
-                .setCancelable(true)
-                .setMailSettingsForFeedbackDialog(
-                    MailSettings(
-                        mailAddress = "pivotmasterapps@gmail.com",
-                        subject = "Issue tracker",
-                        text = "Describe your issue..",
-                        errorToastMessage = "No email address found."
-                    )
+            .Builder(activity)
+            .setRatingThreshold(RatingThreshold.FOUR_AND_A_HALF)
+            .showRateNeverButtonAfterNTimes(R.string.rate_never, null, 2)
+            .setCancelable(true)
+            .setMailSettingsForFeedbackDialog(
+                MailSettings(
+                    mailAddress = "pivotmasterapps@gmail.com",
+                    subject = "Issue tracker",
+                    text = "Describe your issue..",
+                    errorToastMessage = "Something went wrong."
                 )
-                .showNow()
+            )
+            .setNoFeedbackButtonClickListener { showInterstitial(activity) }
+            .setDialogCancelListener { showInterstitial(activity) }
+            .setRateLaterButtonClickListener { showInterstitial(activity) }
+            .showNow()
     }
 
     fun onShowRateUsFinished(activity: Activity) {

@@ -126,22 +126,13 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="·"
-                    android:textColor="@color/premium_text_color"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="16dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="20"
                     android:alpha="0.8"
+                    app:drawableTint="@color/premium_text_color"
+                    app:drawableStartCompat="@drawable/premium_feature_1_ic"
+                    android:drawablePadding="16dp"
                     android:text="@string/feature_1"
                     android:textColor="@color/premium_text_color"
                     android:textSize="24sp" />
@@ -163,22 +154,13 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="·"
-                    android:textColor="@color/premium_text_color"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="16dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="20"
                     android:alpha="0.8"
+                    app:drawableTint="@color/premium_text_color"
+                    app:drawableStartCompat="@drawable/premium_feature_2_ic"
+                    android:drawablePadding="16dp"
                     android:text="@string/feature_2"
                     android:textColor="@color/premium_text_color"
                     android:textSize="24sp" />
@@ -201,22 +183,13 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="·"
-                    android:textColor="@color/premium_text_color"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="16dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="20"
                     android:alpha="0.8"
+                    app:drawableTint="@color/premium_text_color"
+                    app:drawableStartCompat="@drawable/premium_feature_3_ic"
+                    android:drawablePadding="16dp"
                     android:text="@string/feature_3"
                     android:textColor="@color/premium_text_color"
                     android:textSize="24sp" />

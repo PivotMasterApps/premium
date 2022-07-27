@@ -8,8 +8,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import com.anjlab.android.iab.v3.BillingProcessor
+import com.anjlab.android.iab.v3.BuildConfig
 import com.anjlab.android.iab.v3.SkuDetails
-import com.pivot.premium.BuildConfig
 import com.pivot.premium.Premium
 import com.pivot.premium.R
 
@@ -37,15 +37,15 @@ class PremiumActivity : AppCompatActivity() {
                     findViewById<View>(R.id.premium_pb_one_time).visibility = View.GONE
                     products?.getOrNull(0)?.let {
                         if(it.haveTrialPeriod) {
-                            findViewById<TextView>(R.id.premium_one_time).text =
+                            findViewById<TextView>(R.id.pricing_text).text =
                                 resources.getString(
                                     R.string.premium_subscription_price_trial,
                                     it.subscriptionFreeTrialPeriod[1],
                                     it.priceText,
-                                    it.subscriptionPeriod[2]
+                                    if(it.subscriptionPeriod[2].equals('w', true)) "week" else "month"
                                 )
                         } else {
-                            findViewById<TextView>(R.id.premium_one_time).text =
+                            findViewById<TextView>(R.id.pricing_text).text =
                                 resources.getString(
                                     R.string.premium_subscription_price_no_trial,
                                     it.priceText,
