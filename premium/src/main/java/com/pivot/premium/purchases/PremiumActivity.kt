@@ -86,6 +86,8 @@ class PremiumActivity : AppCompatActivity() {
 
     fun onError() {
         Toast.makeText(this, getString(R.string.premium_something_wrong), Toast.LENGTH_LONG).show()
-        endActivity()
+        if(!com.pivot.premium.BuildConfig.DEBUG) {
+            endActivity()
+        }
     }
 }
