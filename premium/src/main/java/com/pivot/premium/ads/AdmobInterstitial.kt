@@ -81,7 +81,7 @@ class AdmobInterstitial (
         Log.d(TAG, "showAd called")
         this.onDismissed = onDismissed
         if(System.currentTimeMillis() - sharedPreferences.getLong(PREF_LAST_SHOWN_MS, 0) >
-            getConfig(CONFIG_INTERSTITIAL_CAPPING, 0) * 1000) {
+            getConfig(CONFIG_INTERSTITIAL_CAPPING, 30) * 1000) {
             Log.d(TAG, "showAd: Capping reached")
             if (mInterstitialAd != null) {
                 Log.d(TAG, "showAd: trying to show")

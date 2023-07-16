@@ -11,7 +11,7 @@
     <string name="premium_something_wrong">Something went wrong</string>
     <string name="premium_prefs_name">premium_prefs</string>
     <string name="admob_app_id">ca-app-pub-2159500504641406~8326954021</string>
-    <string name="interstitial_key">"ca-app-pub-2159500504641406/9448464005"</string>
+    <string name="interstitial_key">ca-app-pub-3940256099942544/1033173712</string>
     <string name="feature_1">Some feature</string>
     <string name="feature_2">Some feature 2</string>
     <string name="feature_3">Some feature 3</string>
