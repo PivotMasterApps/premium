@@ -11,6 +11,7 @@ Premium activity:
 | feature_2            | Strings.xml | Supported locales                        |
 | feature_3            | Strings.xml | How often to try and refresh the strings |
 | app_name             | Strings.xml | The Name of this app                     |
+| banner_ad_unit       | Strings.xml | ad unit for banners                      |
 | premium_feature_1_ic | drawable    | Icon 1st feature                         |
 | premium_feature_2_ic | drawable    | Icon 2nd feature                         |
 | premium_feature_3_ic | drawable    | Icon 3rd feature                         |

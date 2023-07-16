@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.ads.*
+import com.pivot.premium.R
 
 class DFPBannerLoader(
     private val context: Context
@@ -29,7 +30,7 @@ class DFPBannerLoader(
         adState.postValue(AdLoadingState.Loading(this))
         mAdView = AdView(context)
         mAdView?.setAdSize(adSize)
-        mAdView?.adUnitId = "ca-app-pub-7194429227078261/6473502250"
+        mAdView?.adUnitId = context.getString(R.string.banner_ad_unit)
 
         val adRequest = AdRequest.Builder().build()
 
