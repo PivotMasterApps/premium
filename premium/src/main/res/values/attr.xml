@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="ad_size" format="enum">
+        <enum name="banner"  value="0"/>
+        <enum name="medium_rectangle" value="1"/>
+    </attr>
+
+    <declare-styleable name="PremiumBannerView">
+        <attr name="ad_size"/>
+    </declare-styleable>
+</resources>

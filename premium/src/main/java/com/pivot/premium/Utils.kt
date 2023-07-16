@@ -1,6 +1,7 @@
 package com.pivot.premium
 
 import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -27,3 +28,5 @@ fun <T> getConfig(key: String, default: T): T {
 fun Context.sendEvent(event: String, bundle: Bundle? = null) {
     FirebaseAnalytics.getInstance(this).logEvent(event, bundle)
 }
+
+val Int.dp: Int get() = (this / Resources.getSystem().displayMetrics.density).toInt()

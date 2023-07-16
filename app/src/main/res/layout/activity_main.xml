@@ -33,8 +33,9 @@
         android:layout_height="wrap_content"
         android:text="Rate Us!" />
 
-    <com.pivot.premium.ads.banners.AdMobBannerView
+    <com.pivot.premium.ads.banners.PremiumBannerView
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        app:ad_size="banner"
         />
 </LinearLayout>
