@@ -27,7 +27,7 @@ object Premium {
     private var mContext: Context? = null
     lateinit  var mMainActivity: Class<out Activity>
     var mBillingProcessor: BillingProcessor? = null
-    val mIsPremium =  MutableLiveData(false)
+    val mIsPremium =  MutableLiveData<Boolean?>(null)
     var onDismissed: (() -> Unit)? = null
 
     enum class WhatToShow {NONE, INTERSTITIAL, RATING}
@@ -44,8 +44,6 @@ object Premium {
         AdManager.initialize(context)
         initializeBilling()
     }
-
-    fun test(){}
 
     fun onAppOpen(activity: AppCompatActivity) {
         PreferenceManager.getDefaultSharedPreferences(mContext!!).apply {
@@ -65,15 +63,8 @@ object Premium {
         (mContext as Application).registerActivityLifecycleCallbacks(object:
             Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, p1: Bundle?) {
-
                 if(mMainActivity.simpleName == activity::class.java.simpleName) {
-                    if(!OptinActivity.isAccepted(activity)) {
-                        showPrivacyActivity {
-                            onAppOpen(activity as AppCompatActivity)
-                        }
-                    } else {
-                        onAppOpen(activity as AppCompatActivity)
-                    }
+                    onAppOpen(activity as AppCompatActivity)
                 }
             }
             override fun onActivityStarted(p0: Activity) {}
@@ -135,10 +126,6 @@ object Premium {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
         )
-    }
-
-    fun showRewarded(activity: Activity, onDismissed: (Boolean) -> Unit) {
-        AdManager.showRewarded(activity, onDismissed)
     }
 
     fun showInterstitial(activity: Activity, onDismissed: (() -> Unit)? = null) {

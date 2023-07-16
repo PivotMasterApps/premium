@@ -1,15 +1,19 @@
 package com.pivot.premium.purchases
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import com.anjlab.android.iab.v3.BillingProcessor
-import com.anjlab.android.iab.v3.BuildConfig
 import com.anjlab.android.iab.v3.SkuDetails
+import com.pivot.premium.BuildConfig
 import com.pivot.premium.Premium
 import com.pivot.premium.R
 
@@ -68,26 +72,40 @@ class PremiumActivity : AppCompatActivity() {
             Premium.mBillingProcessor?.subscribe(this, SUBSCRIPTION_PRODUCT_ID)
         }
 
-        findViewById<View>(R.id.continue_free_btn).setOnClickListener {
-            Premium.showInterstitial(this) { endActivity() }
-        }
-
         Premium.mIsPremium.observe(this) {
             if(it == true) {
                 Toast.makeText(this, getString(R.string.premium_toast_success), Toast.LENGTH_SHORT).show()
                 endActivity()
             }
         }
+
+        findViewById<TextView>(R.id.optin_eula).apply {
+            movementMethod = LinkMovementMethod.getInstance()
+            text = Html.fromHtml(getString(R.string.eule_text, getString(R.string.pp_link), getString(R.string.terms_link)))
+        }
+    }
+
+    override fun onBackPressed() {
+        if(isAccepted(this)) {
+            super.onBackPressed()
+        }
     }
 
     fun endActivity() {
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .edit().putBoolean("optin_accepted", true).apply()
         finish()
     }
 
     fun onError() {
         Toast.makeText(this, getString(R.string.premium_something_wrong), Toast.LENGTH_LONG).show()
-        if(!com.pivot.premium.BuildConfig.DEBUG) {
+        if(!BuildConfig.DEBUG) {
             endActivity()
         }
+    }
+
+    fun isAccepted(context: Context): Boolean {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+            .getBoolean("optin_accepted", false)
     }
 }

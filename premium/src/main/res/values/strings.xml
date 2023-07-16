@@ -17,7 +17,9 @@
     <string name="feature_3">Some feature 3</string>
     <string name="premium_text">LightBox Plus</string>
     <string name="optin_activity_title">LightBox</string>
-    <string name="eule_text"> Please read and accept our <![CDATA[ <a href="https://pivotmasterapps.github.io/privacy/">Privacy Policy</a>]]> and <![CDATA[<a href="https://pivotmasterapps.github.io/terms/">Terms Of Use</a>]]> before proceeding.</string>
+    <string name="pp_link">https://pivotmasterapps.github.io/privacy/</string>
+    <string name="terms_link">https://pivotmasterapps.github.io/terms/</string>
+    <string name="eule_text"> By continuing you accept our <![CDATA[ <a href="%1$s">Privacy Policy</a>]]> and <![CDATA[<a href="%2$s">Terms Of Use</a>]]>.</string>
 
     <string name="rating_dialog_experience">How was your experience with us?</string>
     <string name="rating_dialog_maybe_later">Maybe later</string>
@@ -31,4 +33,5 @@
     <string name="rate_dialog_negative">No</string>
     <string name="rate_dialog_positive">Yes</string>
     <string name="rate_never">Never</string>
+    <string name="app_name">App Name</string>
 </resources>
