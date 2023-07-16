@@ -37,11 +37,11 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'com.anjlab.android.iab.v3:library:2.0.3'
+    api 'com.anjlab.android.iab.v3:library:2.0.3'
 
     //ads
-    implementation 'com.google.android.gms:play-services-ads:21.1.0'
-    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    api 'com.google.android.gms:play-services-ads:21.1.0'
+    api 'com.facebook.shimmer:shimmer:0.5.0'
 
     api platform('com.google.firebase:firebase-bom:30.2.0')
     api 'com.google.firebase:firebase-analytics'
@@ -49,7 +49,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
     implementation 'com.suddenh4x.ratingdialog:awesome-app-rating:2.4.0'
-    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
