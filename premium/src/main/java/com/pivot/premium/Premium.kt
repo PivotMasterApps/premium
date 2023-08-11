@@ -5,20 +5,21 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.PurchaseInfo
-import com.google.android.gms.ads.MobileAds
 import com.pivot.premium.ads.AdManager
 import com.pivot.premium.purchases.PremiumActivity
-import com.pivot.premium.rating.RatingDialog
 import com.suddenh4x.ratingdialog.AppRating
 import com.suddenh4x.ratingdialog.preferences.MailSettings
 import com.suddenh4x.ratingdialog.preferences.RatingThreshold
+
 
 private const val TAG = "Premium"
 @SuppressLint("StaticFieldLeak")
@@ -148,6 +149,29 @@ object Premium {
                 mContext?.getString(R.string.premium_gpc_key),
                 billingProcessorHandler
             )
+    }
+
+    fun shareMyApp(context: Context) {
+
+        val intent = Intent.createChooser(Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=${context.packageName}")
+            type = "text/plain"
+        }, null)
+
+        context.startActivity(intent)
+    }
+
+    fun sendSupportEmail(context: Context) {
+        val emailIntent = Intent(Intent.ACTION_SENDTO)
+        emailIntent.data = Uri.parse("mailto:")
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf("pivotmasterapps@gmail.com"))
+
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "I have a question") // Subject (title)
+
+        if (emailIntent.resolveActivity(context.packageManager) != null) {
+            context.startActivity(emailIntent)
+        }
     }
 
     private val billingProcessorHandler: BillingProcessor.IBillingHandler = object :
