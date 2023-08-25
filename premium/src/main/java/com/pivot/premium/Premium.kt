@@ -167,7 +167,7 @@ object Premium {
         emailIntent.data = Uri.parse("mailto:")
         emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf("pivotmasterapps@gmail.com"))
 
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "I have a question") // Subject (title)
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Issue tracker") // Subject (title)
 
         if (emailIntent.resolveActivity(context.packageManager) != null) {
             context.startActivity(emailIntent)
