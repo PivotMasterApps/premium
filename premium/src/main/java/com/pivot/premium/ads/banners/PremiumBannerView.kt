@@ -75,14 +75,13 @@ class PremiumBannerView @JvmOverloads constructor(
         startShimmer()
         val shimmer = shimmer()
         CoroutineScope(Dispatchers.IO).launch {
-            delay(5000)
             val adView = getAdView()
-            if(adView == null) {
-                isVisible = false
-                return@launch
-            }
-            isVisible = true
             withContext(Dispatchers.Main) {
+                if(adView == null) {
+                    isVisible = false
+                    return@withContext
+                }
+                isVisible = true
                 removeView(shimmer)
                 addView(adView)
                 stopShimmer()
