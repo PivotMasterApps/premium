@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
@@ -149,6 +150,16 @@ object Premium {
                 mContext?.getString(R.string.premium_gpc_key),
                 billingProcessorHandler
             )
+    }
+
+    fun openUrl(context: Context, url: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(context, context.getString(R.string.no_app_resolved), Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun shareMyApp(context: Context) {
