@@ -16,6 +16,7 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.pivot.premium.Premium
 import com.pivot.premium.R
+import com.pivot.premium.billing.BillingManager
 import com.pivot.premium.getConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,10 +50,10 @@ class PremiumBannerView @JvmOverloads constructor(
             height = ViewGroup.LayoutParams.WRAP_CONTENT
             minimumHeight = getPremiumMinHeight()
         }
-        Premium.mIsPremium.observe((context as AppCompatActivity)) {
-            if(it == true) {
+        Premium.mBillingManager?.mIsPremium?.observe((context as AppCompatActivity)) {
+            if(it == BillingManager.PremiumState.PREMIUM) {
                 isVisible = false
-            } else if (it == false) {
+            } else {
                 updateLayoutParams { height = ViewGroup.LayoutParams.WRAP_CONTENT }
                 isVisible = true
                 startLoading()

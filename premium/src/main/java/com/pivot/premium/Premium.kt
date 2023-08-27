@@ -13,9 +13,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
-import com.anjlab.android.iab.v3.BillingProcessor
-import com.anjlab.android.iab.v3.PurchaseInfo
 import com.pivot.premium.ads.AdManager
+import com.pivot.premium.billing.BillingManager
 import com.pivot.premium.purchases.PremiumActivity
 import com.suddenh4x.ratingdialog.AppRating
 import com.suddenh4x.ratingdialog.preferences.MailSettings
@@ -28,8 +27,7 @@ object Premium {
 
     private var mContext: Context? = null
     lateinit  var mMainActivity: Class<out Activity>
-    var mBillingProcessor: BillingProcessor? = null
-    val mIsPremium =  MutableLiveData<Boolean?>(null)
+    var mBillingManager: BillingManager? = null
     var onDismissed: (() -> Unit)? = null
 
     enum class WhatToShow {NONE, INTERSTITIAL, RATING}
@@ -50,7 +48,7 @@ object Premium {
     fun onAppOpen(activity: AppCompatActivity) {
         PreferenceManager.getDefaultSharedPreferences(mContext!!).apply {
             val opens = getInt("app_opens", 0)
-            if(mIsPremium.value == false && listOf(0,2,5).contains(opens)) {
+            if(mBillingManager?.mIsPremium?.value == BillingManager.PremiumState.NONE && listOf(0,2,5).contains(opens)) {
                 showPremium()
             } else if( opens % 3 == 0 &&
                 !AppRating.isDialogAgreed(mContext!!) &&
@@ -131,25 +129,13 @@ object Premium {
     }
 
     fun showInterstitial(activity: Activity, onDismissed: (() -> Unit)? = null) {
-        if(mIsPremium.value == false) {
+        if(mBillingManager?.mIsPremium?.value == BillingManager.PremiumState.NONE) {
             AdManager.showInterstitial(activity, onDismissed)
         }
     }
 
-    private fun updateBillingState() {
-        val subscribed = mBillingProcessor?.isSubscribed(PremiumActivity.SUBSCRIPTION_PRODUCT_ID) == true
-        val purchased = mBillingProcessor?.isPurchased(PremiumActivity.IN_APP_PRODUCT_ID) == true
-        val premium = subscribed || purchased
-        mIsPremium.postValue(premium)
-    }
-
     private fun initializeBilling() {
-        mBillingProcessor =
-            BillingProcessor(
-                mContext,
-                mContext?.getString(R.string.premium_gpc_key),
-                billingProcessorHandler
-            )
+        mBillingManager = BillingManager(mContext!!)
     }
 
     fun openUrl(context: Context, url: String) {
@@ -182,31 +168,6 @@ object Premium {
 
         if (emailIntent.resolveActivity(context.packageManager) != null) {
             context.startActivity(emailIntent)
-        }
-    }
-
-    private val billingProcessorHandler: BillingProcessor.IBillingHandler = object :
-        BillingProcessor.IBillingHandler {
-        override fun onBillingInitialized() {
-            mBillingProcessor?.loadOwnedPurchasesFromGoogleAsync(object : BillingProcessor.IPurchasesResponseListener {
-                override fun onPurchasesSuccess() {
-                    updateBillingState()
-                }
-
-                override fun onPurchasesError() {
-                    updateBillingState()
-                }
-            })
-        }
-
-        override fun onProductPurchased(productId: String, details: PurchaseInfo?) {
-            mIsPremium.postValue(true)
-        }
-
-        override fun onPurchaseHistoryRestored() {}
-
-        override fun onBillingError(errorCode: Int, error: Throwable?) {
-            mIsPremium.postValue(false)
         }
     }
 }
