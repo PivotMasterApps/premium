@@ -17,6 +17,7 @@ import com.pivot.premium.BuildConfig
 import com.pivot.premium.Premium
 import com.pivot.premium.R
 import com.pivot.premium.billing.BillingManager
+import com.pivot.premium.sendEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,6 +47,7 @@ class PremiumActivity : AppCompatActivity() {
         findViewById<View>(R.id.premium_one_time).setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 Premium.mBillingManager?.launch(this@PremiumActivity)
+                sendEvent("trial_clicked")
             }
         }
 

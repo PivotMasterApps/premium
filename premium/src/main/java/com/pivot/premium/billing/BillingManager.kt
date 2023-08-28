@@ -21,6 +21,7 @@ import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.queryProductDetails
 import com.pivot.premium.Premium.PREMIUM_PREFS_NAME
 import com.pivot.premium.R
+import com.pivot.premium.sendEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,6 +42,7 @@ class BillingManager(
             purchases?.forEach { purchase ->
                 if(purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
                     setState(PremiumState.PREMIUM)
+                    context.sendEvent("trial_started")
                     return@forEach
                 } else if(purchase.purchaseState == Purchase.PurchaseState.PENDING) {
                     setState(PremiumState.PENDING)
