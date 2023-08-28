@@ -25,6 +25,8 @@ private const val TAG = "Premium"
 @SuppressLint("StaticFieldLeak")
 object Premium {
 
+    const val PREMIUM_PREFS_NAME = "premium_shared_preferences"
+
     private var mContext: Context? = null
     lateinit  var mMainActivity: Class<out Activity>
     var mBillingManager: BillingManager? = null
@@ -170,4 +172,6 @@ object Premium {
             context.startActivity(emailIntent)
         }
     }
+
+    fun isPremium() = mBillingManager?.mIsPremium
 }

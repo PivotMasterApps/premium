@@ -2,6 +2,7 @@ package com.pivot.premium.billing
 
 import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.android.billingclient.api.BillingClient
@@ -12,10 +13,13 @@ import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.ProductDetailsResult
 import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.Purchase.PurchaseState
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryProductDetailsParams.Product
+import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.queryProductDetails
+import com.pivot.premium.Premium.PREMIUM_PREFS_NAME
 import com.pivot.premium.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +31,7 @@ class BillingManager(
 ) {
 
     var productDetailsResult: ProductDetailsResult? = null
+    val preferences: SharedPreferences = context.getSharedPreferences(PREMIUM_PREFS_NAME, Context.MODE_PRIVATE)
     val mIsPremium =  MutableLiveData(PremiumState.NONE)
     val mPrice = MutableLiveData("")
 
@@ -35,13 +40,13 @@ class BillingManager(
             // To be implemented in a later section.
             purchases?.forEach { purchase ->
                 if(purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
-                    mIsPremium.postValue(PremiumState.PREMIUM)
+                    setState(PremiumState.PREMIUM)
                     return@forEach
                 } else if(purchase.purchaseState == Purchase.PurchaseState.PENDING) {
-                    mIsPremium.postValue(PremiumState.PENDING)
+                    setState(PremiumState.PENDING)
                     return@forEach
                 } else {
-                    mIsPremium.postValue(PremiumState.NONE)
+                    setState(PremiumState.NONE)
                 }
             }
         }
@@ -52,7 +57,13 @@ class BillingManager(
         .build()
 
     init {
+        mIsPremium.postValue(lastCachedValue())
         startConnection()
+    }
+
+    private fun setState(state: PremiumState) {
+        mIsPremium.postValue(state)
+        saveCachedValue(state)
     }
 
     private fun startConnection() {
@@ -72,12 +83,12 @@ class BillingManager(
     }
 
     suspend fun launch(activity: Activity) {
-        val productDetails = productDetailsResult?.productDetailsList?.get(0) ?: return
+        val productDetails = productDetailsResult?.productDetailsList?.firstOrNull() ?: return
 
         val productDetailsParamsList = listOf(
             BillingFlowParams.ProductDetailsParams.newBuilder()
                 .setProductDetails(productDetails)
-                .setOfferToken(productDetails.subscriptionOfferDetails?.get(0)?.offerToken ?: "")
+                .setOfferToken(productDetails.subscriptionOfferDetails?.firstOrNull()?.offerToken ?: "")
                 .build()
         )
 
@@ -90,6 +101,28 @@ class BillingManager(
         if(billingResult.responseCode != BillingResponseCode.OK) {
             activity.finish()
             Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    suspend fun fetchPurchases() {
+        val params = QueryPurchasesParams.newBuilder()
+            .setProductType(BillingClient.ProductType.SUBS)
+
+        // uses queryPurchasesAsync Kotlin extension function
+        withContext(Dispatchers.IO) {
+            billingClient.queryPurchasesAsync(params.build()) { result, purchases ->
+                purchases.forEach {
+                    if(it.purchaseState == PurchaseState.PURCHASED) {
+                        setState(PremiumState.PREMIUM)
+                        return@forEach
+                    } else if(it.purchaseState == PurchaseState.PENDING) {
+                        setState(PremiumState.PENDING)
+                        return@forEach
+                    } else {
+                        mIsPremium.postValue(PremiumState.NONE)
+                    }
+                }
+            }
         }
     }
 
@@ -108,7 +141,7 @@ class BillingManager(
         productDetailsResult = withContext(Dispatchers.IO) {
             billingClient.queryProductDetails(params.build())
         }
-        productDetailsResult?.productDetailsList?.get(0)?.subscriptionOfferDetails?.get(0)?.pricingPhases?.pricingPhaseList?.get(0)?.let {
+        productDetailsResult?.productDetailsList?.firstOrNull()?.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.let {
             mPrice.postValue(context.resources.getString(
                 R.string.premium_subscription_price_trial,
                 "3",
@@ -118,7 +151,30 @@ class BillingManager(
         }
     }
 
+    private fun lastCachedValue(): PremiumState {
+        return when(preferences.getInt(purchase_state_key, 0)) {
+            0 -> PremiumState.NONE
+            1 -> PremiumState.PREMIUM
+            2 -> PremiumState.PENDING
+            else -> PremiumState.NONE
+        }
+    }
+
+    private fun saveCachedValue(state: PremiumState) {
+        val stateInt = when(state) {
+            PremiumState.NONE -> 0
+            PremiumState.PREMIUM -> 1
+            PremiumState.PENDING -> 2
+            else -> 0
+        }
+        preferences.edit().putInt(purchase_state_key, stateInt).apply()
+    }
+
     enum class PremiumState {
         NONE, PREMIUM, PENDING
+    }
+
+    companion object {
+        const val purchase_state_key = "last_purchase_state"
     }
 }
