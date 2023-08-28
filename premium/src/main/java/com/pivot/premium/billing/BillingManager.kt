@@ -77,6 +77,7 @@ class BillingManager(
         val productDetailsParamsList = listOf(
             BillingFlowParams.ProductDetailsParams.newBuilder()
                 .setProductDetails(productDetails)
+                .setOfferToken(productDetails.subscriptionOfferDetails?.get(0)?.offerToken ?: "")
                 .build()
         )
 
@@ -112,8 +113,7 @@ class BillingManager(
                 R.string.premium_subscription_price_trial,
                 "3",
                 it.formattedPrice,
-                it.billingPeriod
-                )
+                if(it.billingPeriod[2].equals('w', true)) "week" else "month")
             )
         }
     }

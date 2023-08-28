@@ -46,15 +46,28 @@
         android:background="@drawable/ripple_with_goplus_btn_bg"
         android:gravity="center"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginBottom="16dp"
         android:paddingHorizontal="32dp"
         android:paddingVertical="12dp"
         android:text="TRY FOR FREE"
         android:textColor="#fff"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/optin_eula"
+        app:layout_constraintBottom_toTopOf="@+id/renew_tv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/renew_tv"
+        android:text="@string/renew_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/premium_text_color"
+        android:alpha="0.8"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@id/optin_eula"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
+        />
 
     <TextView
         android:id="@+id/optin_eula"
