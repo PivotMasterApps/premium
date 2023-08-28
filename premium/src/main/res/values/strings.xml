@@ -38,4 +38,5 @@
     <string name="no_app_resolved">No app found</string>
     <string name="premium_subscription_id">subscription_offer</string>
     <string name="renew_text">Renews automatically, cancel anytime</string>
+    <string name="premium_text_subtitle">Unlimited Access!</string>
 </resources>
