@@ -29,6 +29,7 @@ object Premium {
 
     private var mContext: Context? = null
     lateinit  var mMainActivity: Class<out Activity>
+    lateinit var mConfiguration: Configuration
     var mBillingManager: BillingManager? = null
     var onDismissed: (() -> Unit)? = null
 
@@ -36,10 +37,12 @@ object Premium {
 
     fun initialize(
         context: Context,
-        mainActivity: Class<out Activity>
+        mainActivity: Class<out Activity>,
+        configuration: Configuration
     ) {
         if(mContext != null) return
 
+        mConfiguration = configuration
         mMainActivity = mainActivity
         mContext = context
         initializeLifecycle()
@@ -174,4 +177,10 @@ object Premium {
     }
 
     fun isPremium() = mBillingManager?.mIsPremium
+
+    data class Configuration(
+        val bannerAdUnit: String,
+        val interstitialAdUnit: String,
+        val showTestAds: Boolean = false
+    ){}
 }

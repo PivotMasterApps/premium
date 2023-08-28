@@ -29,4 +29,12 @@ fun Context.sendEvent(event: String, bundle: Bundle? = null) {
     FirebaseAnalytics.getInstance(this).logEvent(event, bundle)
 }
 
+fun getInterstitialAdUnit(): String {
+    return if(Premium.mConfiguration.showTestAds) "ca-app-pub-3940256099942544/1033173712" else Premium.mConfiguration.interstitialAdUnit
+}
+
+fun getBannersAdUnit(): String {
+    return if(Premium.mConfiguration.showTestAds) "ca-app-pub-3940256099942544/6300978111" else Premium.mConfiguration.bannerAdUnit
+}
+
 val Int.dp: Int get() = (this / Resources.getSystem().displayMetrics.density).toInt()

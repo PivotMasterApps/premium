@@ -9,6 +9,7 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 import com.pivot.premium.R
+import com.pivot.premium.getBannersAdUnit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -25,7 +26,7 @@ class AdMobAdLoader(val context: Context) {
         return suspendCancellableCoroutine { cont ->
             mAdView = AdView(context)
             mAdView?.setAdSize(if(adSize == PremiumBannerView.PremiumAdSize.BANNER) getAnchoredSize() else AdSize.MEDIUM_RECTANGLE)
-            mAdView?.adUnitId = context.getString(R.string.banner_ad_unit)
+            mAdView?.adUnitId = getBannersAdUnit()
 
             val adRequest = AdRequest.Builder().build()
 
