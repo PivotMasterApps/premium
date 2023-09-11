@@ -45,6 +45,7 @@ class BillingManager(
             purchases?.forEach { purchase ->
                 if(purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
                     acknowledgePurchases(purchase)
+                    setState(PremiumState.PREMIUM)
                     context.sendEvent("trial_started")
                     return@forEach
                 } else if(purchase.purchaseState == Purchase.PurchaseState.PENDING) {
@@ -150,9 +151,7 @@ class BillingManager(
                     ) {
                         Log.d(TAG, "acknowledgePurchases: Acknowleged!")
                         context.sendEvent("trial_acknowledged")
-                        setState(PremiumState.PREMIUM)
                     } else {
-                        setState(PremiumState.ERROR)
                         Log.d(TAG, "acknowledgePurchases: error")
                         Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
                     }
