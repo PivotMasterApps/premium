@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.ads.*
 import com.pivot.premium.R
 import com.pivot.premium.getBannersAdUnit
+import com.pivot.premium.sendEvent
 
 class DFPBannerLoader(
     private val context: Context
@@ -42,6 +43,10 @@ class DFPBannerLoader(
     }
 
     private val adListener = object: AdListener() {
+        override fun onAdImpression() {
+            super.onAdImpression()
+            context.sendEvent("paid_ad_impression")
+        }
         override fun onAdLoaded() {
             // Code to be executed when an ad finishes loading.
             adState.postValue(AdLoadingState.Success(this@DFPBannerLoader))

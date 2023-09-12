@@ -10,6 +10,7 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 import com.pivot.premium.R
 import com.pivot.premium.getBannersAdUnit
+import com.pivot.premium.sendEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -41,6 +42,10 @@ class AdMobAdLoader(val context: Context) {
                     if(cont.isActive) {
                         cont.resume(null)
                     }
+                }
+
+                override fun onAdImpression() {
+                    context.sendEvent("paid_ad_impression")
                 }
 
                 override fun onAdOpened() {
