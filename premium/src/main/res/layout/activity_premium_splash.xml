@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/MySplashLayout"
-    android:background="@color/premium_background"
+    android:background="@color/premium_splash_background"
     tools:context=".PremiumSplashActivity">
 
     <ImageView
