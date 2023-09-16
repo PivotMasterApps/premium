@@ -62,7 +62,7 @@
         android:layout_marginHorizontal="32dp"
         android:paddingHorizontal="32dp"
         android:paddingVertical="12dp"
-        android:text="TRY FOR FREE"
+        android:text="START FREE TRIAL"
         android:textColor="#fff"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/renew_tv"
