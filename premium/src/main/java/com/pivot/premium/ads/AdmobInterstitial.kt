@@ -71,6 +71,7 @@ class AdmobInterstitial (
         override fun onAdImpression() {
             // Called when an impression is recorded for an ad.
             sharedPreferences.edit().putLong(PREF_LAST_SHOWN_MS, System.currentTimeMillis()).apply()
+            context.sendEvent("paid_ad_impression")
         }
 
         override fun onAdShowedFullScreenContent() {

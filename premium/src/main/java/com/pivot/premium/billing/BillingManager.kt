@@ -3,8 +3,10 @@ package com.pivot.premium.billing
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode
 import com.android.billingclient.api.BillingClientStateListener
@@ -27,6 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+private const val TAG = "BillingManager"
 class BillingManager(
     val context: Context
 ) {
@@ -41,6 +44,7 @@ class BillingManager(
             // To be implemented in a later section.
             purchases?.forEach { purchase ->
                 if(purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
+                    acknowledgePurchases(purchase)
                     setState(PremiumState.PREMIUM)
                     context.sendEvent("trial_started")
                     return@forEach
@@ -73,7 +77,10 @@ class BillingManager(
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 if (billingResult.responseCode ==  BillingClient.BillingResponseCode.OK) {
                     // The BillingClient is ready. You can query purchases here.
-                    CoroutineScope(Dispatchers.IO).launch { loadOffer() }
+                    CoroutineScope(Dispatchers.IO).launch {
+                        fetchPurchases()
+                        loadOffer()
+                    }
                 }
             }
             override fun onBillingServiceDisconnected() {
@@ -115,7 +122,7 @@ class BillingManager(
             billingClient.queryPurchasesAsync(params.build()) { result, purchases ->
                 purchases.forEach {
                     if(it.purchaseState == PurchaseState.PURCHASED) {
-                        setState(PremiumState.PREMIUM)
+                        acknowledgePurchases(it)
                         return@forEach
                     } else if(it.purchaseState == PurchaseState.PENDING) {
                         setState(PremiumState.PENDING)
@@ -124,6 +131,33 @@ class BillingManager(
                         mIsPremium.postValue(PremiumState.NONE)
                     }
                 }
+            }
+        }
+    }
+
+    // Perform new subscription purchases' acknowledgement client side.
+    private fun acknowledgePurchases(purchase: Purchase?) {
+        purchase?.let {
+            if (!it.isAcknowledged) {
+                val params = AcknowledgePurchaseParams.newBuilder()
+                    .setPurchaseToken(it.purchaseToken)
+                    .build()
+
+                billingClient.acknowledgePurchase(
+                    params
+                ) { billingResult ->
+                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK &&
+                        it.purchaseState == Purchase.PurchaseState.PURCHASED
+                    ) {
+                        Log.d(TAG, "acknowledgePurchases: Acknowleged!")
+                        context.sendEvent("trial_acknowledged")
+                    } else {
+                        Log.d(TAG, "acknowledgePurchases: error")
+                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                setState(PremiumState.PREMIUM)
             }
         }
     }
@@ -158,6 +192,7 @@ class BillingManager(
             0 -> PremiumState.NONE
             1 -> PremiumState.PREMIUM
             2 -> PremiumState.PENDING
+            3 -> PremiumState.ERROR
             else -> PremiumState.NONE
         }
     }
@@ -167,13 +202,14 @@ class BillingManager(
             PremiumState.NONE -> 0
             PremiumState.PREMIUM -> 1
             PremiumState.PENDING -> 2
+            PremiumState.ERROR -> 3
             else -> 0
         }
         preferences.edit().putInt(purchase_state_key, stateInt).apply()
     }
 
     enum class PremiumState {
-        NONE, PREMIUM, PENDING
+        NONE, PREMIUM, PENDING, ERROR
     }
 
     companion object {

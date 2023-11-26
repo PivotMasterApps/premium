@@ -4,6 +4,11 @@
         <item name="android:background">@color/premium_background</item>
         <item name="android:colorBackground">@color/premium_background</item>
         <item name="android:windowBackground">@color/premium_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@null</item>
     </style>
 
     <style name="CommonTextAppearanceDark" parent="@style/TextAppearance.AppCompat">

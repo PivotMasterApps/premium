@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/MySplashLayout"
-    android:background="@color/premium_background"
+    android:background="@color/premium_splash_background"
     tools:context=".PremiumSplashActivity">
 
     <ImageView
         android:id="@+id/premium_splash_ic"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.4"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,19 +23,25 @@
         android:id="@+id/premium_splash_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="48dp"
         android:textSize="18sp"
         android:textStyle="bold"
         tools:text="App name"
-        android:textColor="@color/premium_text_color"
+        android:background="@null"
+        android:textColor="@color/premium_splash_text_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <ProgressBar
+        android:id="@+id/splash_pb"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginBottom="16dp"
+        android:background="@null"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/premium_splash_pb_color"
         app:layout_constraintBottom_toTopOf="@id/premium_splash_name"
         app:layout_constraintStart_toStartOf="@id/premium_splash_name"
         app:layout_constraintEnd_toEndOf="@id/premium_splash_name"/>
