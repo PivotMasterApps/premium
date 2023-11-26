@@ -5,13 +5,9 @@
     tools:targetApi="lollipop"> <!-- ripple effect color -->
     <item android:id="@android:id/background">
         <shape android:shape="rectangle">
-            <gradient
-                android:startColor="#b223e9"
-                android:centerColor="#f732a2"
-                android:endColor="#ff9c50"
-                android:angle="360" />
+            <solid
+                android:color="@color/premium_accent_color" />
             <corners android:radius="20dp"/>
         </shape>
-
     </item>
 </ripple>

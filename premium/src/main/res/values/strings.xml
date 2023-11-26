@@ -12,9 +12,9 @@
     <string name="premium_prefs_name">premium_prefs</string>
     <string name="admob_app_id">ca-app-pub-2159500504641406~8326954021</string>
     <string name="interstitial_key">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="feature_1">Some feature</string>
-    <string name="feature_2">Some feature 2</string>
-    <string name="feature_3">Some feature 3</string>
+    <string name="feature_1">Unlimited features</string>
+    <string name="feature_2">100% Ads Free</string>
+    <string name="feature_3">VIP Customer Support</string>
     <string name="premium_text">LightBox Plus</string>
     <string name="optin_activity_title">LightBox</string>
     <string name="pp_link">https://pivotmasterapps.github.io/privacy/</string>
@@ -38,5 +38,5 @@
     <string name="no_app_resolved">No app found</string>
     <string name="premium_subscription_id">subscription_offer</string>
     <string name="renew_text">Renews automatically, cancel anytime</string>
-    <string name="premium_text_subtitle">Unlimited Access!</string>
+    <string name="premium_text_subtitle">Unlimited Access</string>
 </resources>

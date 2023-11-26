@@ -17,4 +17,7 @@
     <color name="buttonBackgroundColor">#FFFFFF</color>
     <color name="ratingBarColor">#FFD600</color>
     <color name="cardBackgroundColor">#FFFFFF</color>
+
+    <color name="premium_accent_color">#C31EDF</color>
+    <color name="premium_tick_color">#FFFFFF</color>
 </resources>
