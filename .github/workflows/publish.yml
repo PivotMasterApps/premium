@@ -1,0 +1,32 @@
+name: Publish Android Library
+
+on:
+  push:
+    branches: [master, develop, ci_attemp2]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Build and publish library
+        run: |
+          ./gradlew clean build
+          ./gradlew publishToMavenLocal
+
+      - name: Publish to GitHub Packages
+        run: |
+          echo "//maven.pkg.github.com/PivotMasterApps/premium/:username=${{ github.actor }}" > ~/.gradle/gradle.properties
+          echo "//maven.pkg.github.com/PivotMasterApps/premium/:password=${{ secrets.GITHUB_TOKEN }}" >> ~/.gradle/gradle.properties
+          ./gradlew publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

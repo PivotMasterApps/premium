@@ -5,6 +5,32 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
 }
 
+def LIBRARY_VERSION = "2.0.1"
+
+static def getGitBranchName() {
+    def branch = ""
+    def proc = "git rev-parse --abbrev-ref HEAD".execute()
+    proc.in.eachLine { line -> branch = line }
+    proc.err.eachLine { line -> println line }
+    proc.waitFor()
+    branch
+}
+
+ext.getLibraryVersion = {
+    def branchName = getGitBranchName()
+    def version = ""
+
+    if (branchName == "develop") {
+        version = LIBRARY_VERSION + "-SNAPSHOT"
+    } else if (branchName == "master") {
+        version = LIBRARY_VERSION
+    } else {
+        version = "$LIBRARY_VERSION-${branchName.replaceAll("/", "-")}-SNAPSHOT"
+    }
+
+    return version
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
