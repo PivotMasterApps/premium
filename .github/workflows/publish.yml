@@ -28,6 +28,3 @@ jobs:
           echo "//maven.pkg.github.com/PivotMasterApps/premium/:username=pivotmasterapps" > ~/.gradle/gradle.properties
           echo "//maven.pkg.github.com/PivotMasterApps/premium/:password=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" >> ~/.gradle/gradle.properties
           ./gradlew publish
-        env:
-          USERNAME_GITHUB: ${{ secrets.USERNAME_GITHUB }}
-          TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
