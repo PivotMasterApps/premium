@@ -34,6 +34,8 @@ publishing {
         maven {
             name = "GithubPackages"
             url = uri("https://maven.pkg.github.com/PivotMasterApps/premium")
+            def envMap = System.getenv()
+            println "Environment Map: $envMap"
             if (project.hasProperty("githubUsername") || System.getenv("GITHUB_USERNAME")) {
                 credentials {
                     username = project.findProperty("githubUsername") ?: System.getenv("USERNAME_GITHUB")
