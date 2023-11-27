@@ -18,9 +18,15 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
+      - name: Set environment variables
+        run: |
+          echo "GITHUB_USERNAME=${{ secrets.USERNAME_GITHUB }}" >> $GITHUB_ENV
+          echo "GITHUB_TOKEN=${{ secrets.TOKEN_GITHUB }}" >> $GITHUB_ENV
+          echo "tokens is ${{ secrets.TOKEN_GITHUB }}"
+
       - name: Build and publish library
         run: |
-          ./gradlew clean build -PgithubUsername=${{ secrets.USERNAME_GITHUB }} -PgithubToken=${{ secrets.TOKEN_GITHUB }}
+          ./gradlew clean build
           ./gradlew publishToMavenLocal
 
       - name: Publish to GitHub Packages
