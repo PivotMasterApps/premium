@@ -35,8 +35,8 @@ publishing {
             name = "GithubPackages"
             url = uri("https://maven.pkg.github.com/PivotMasterApps/premium")
             credentials {
-                username = 'pivotmasterapps'
-                password = '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'
+                username = project.findProperty("githubUsername") ?: System.getenv("USERNAME_GITHUB")
+                password = project.findProperty("githubToken") ?: System.getenv("TOKEN_GITHUB")
             }
         }
     }
