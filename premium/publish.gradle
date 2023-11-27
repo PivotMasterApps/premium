@@ -36,7 +36,7 @@ publishing {
             url = uri("https://maven.pkg.github.com/PivotMasterApps/premium")
             credentials {
                 username = 'pivotmasterapps'
-                password = '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'
+                password = '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'
             }
         }
     }
