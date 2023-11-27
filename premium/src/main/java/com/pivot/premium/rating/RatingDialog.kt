@@ -35,7 +35,7 @@ import com.pivot.premium.ads.banners.px
 import com.pivot.premium.getConfig
 import com.pivot.premium.getPref
 import com.pivot.premium.putPref
-import java.lang.Exception
+import kotlin.Exception
 
 
 /**
@@ -52,16 +52,12 @@ class RatingDialog(
         private const val DEFAULT_THRESHOLD = 5
 
         fun shouldShow(context: Context): Boolean {
-            if(BuildConfig.DEBUG) {
-                return true
-            }
-
             if(context.getPref("user_rating", -1) != -1) {
                 return false
             }
 
             val lastTimeShown = context.getPref("last_time_rating_shown", 0)
-            if(System.currentTimeMillis() - lastTimeShown < getConfig("rating_capping", 120)) {
+            if(System.currentTimeMillis() - lastTimeShown < getConfig("rating_capping", 120) * 1000) {
                 context.putPref("last_time_rating_shown", System.currentTimeMillis())
                 return true
             }
@@ -210,17 +206,21 @@ class RatingDialog(
             val manager = ReviewManagerFactory.create(context)
             val request = manager.requestReviewFlow()
             request.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // We got the ReviewInfo object
-                    val reviewInfo = task.result
-                    val flow = manager.launchReviewFlow(activity, reviewInfo)
-                    flow.addOnCompleteListener { _ ->
-                        onCompleted(true)
+                try {
+                    if (task.isSuccessful) {
+                        // We got the ReviewInfo object
+                        val reviewInfo = task.result
+                        val flow = manager.launchReviewFlow(activity, reviewInfo)
+                        flow.addOnCompleteListener { _ ->
+                            onCompleted(true)
+                        }
+                    } else {
+                        // There was some problem, log or handle the error code.
+                        @ReviewErrorCode val reviewErrorCode =
+                            (task.getException() as ReviewException).errorCode
+                        onCompleted(false)
                     }
-                } else {
-                    // There was some problem, log or handle the error code.
-                    @ReviewErrorCode val reviewErrorCode =
-                        (task.getException() as ReviewException).errorCode
+                } catch (e: Exception) {
                     onCompleted(false)
                 }
             }

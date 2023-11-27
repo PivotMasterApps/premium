@@ -39,7 +39,8 @@
     <string name="no_app_resolved">No app found</string>
     <string name="premium_subscription_id">subscription_offer</string>
     <string name="renew_text">Renews automatically, cancel anytime</string>
-    <string name="premium_text_subtitle">Unlimited Access</string>
+    <string name="premium_text_subtitle">Unlock all features</string>
+    <string name="premium_text_title">GO PRO!</string>
     <string name="rate">Rate Us</string>
     <string name="rating_dialog_experience_directions">The best we can get</string>
 </resources>
