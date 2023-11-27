@@ -14,10 +14,10 @@ android {
         minSdk 21
         targetSdk 33
         versionName getLibraryVersion()
+
         setProperty("archivesBaseName", getPremiumArchiveBaseName())
 
         buildConfigField 'String', 'VERSION_NAME', "\"$versionName\""
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -39,6 +39,14 @@ android {
         jvmTarget = '1.8'
     }
     publishNonDefault true
+
+    flavorDimensions = ["version"]
+
+    productFlavors {
+        regular {
+            versionName = "${defaultConfig.versionName}.${defaultConfig.versionCode}"
+        }
+    }
 }
 
 dependencies {
@@ -69,18 +77,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = 'com.pivotmaster'
-                artifactId = 'premium'
-                version = getVersion()
-            }
-        }
-    }
-}
 
 def getVersion() {
     def branchName = getBranchName()

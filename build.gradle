@@ -16,6 +16,12 @@ static def getGitBranchName() {
     branch
 }
 
+task getLibraryVersionTask {
+    doLast {
+        println getLibraryVersion()
+    }
+}
+
 ext.getPremiumArchiveBaseName = {
     return "premium-${getLibraryVersion()}"
 }
