@@ -76,30 +76,3 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
-
-
-def getVersion() {
-    def branchName = getBranchName()
-    def version = "1.0.7"
-
-    if (branchName == "develop") {
-        def dateFormat = new SimpleDateFormat('yyyyMMddHHmmss')
-        def timestamp = dateFormat.format(new Date())
-        version += "-SNAPSHOT-${timestamp}"
-    }
-
-    return version
-}
-
-def getBranchName() {
-    def branch = "UNKNOWN"
-    def branchEnv = System.getenv("BRANCH_NAME")
-
-    if (branchEnv != null && !branchEnv.isEmpty()) {
-        branch = branchEnv
-    } else if (project.hasProperty("gitBranch")) {
-        branch = project.gitBranch
-    }
-
-    return branch
-}
