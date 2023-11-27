@@ -5,6 +5,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'maven-publish'
 }
+apply from: file('publish.gradle')
 
 android {
     compileSdk 33
@@ -13,6 +14,9 @@ android {
         minSdk 21
         targetSdk 33
         versionName getLibraryVersion()
+        setProperty("archivesBaseName", getPhArchiveBaseName())
+
+        buildConfigField 'String', 'VERSION_NAME', "\"$versionName\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -24,6 +28,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        checkDependencies true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -31,6 +38,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    publishNonDefault true
 }
 
 dependencies {
