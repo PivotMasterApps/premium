@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 Publish the library to the remote GitHub maven repo:
 ./gradlew clean assembleRelease publish
 
-Publish the library to the local maven repo:
+Publish the library to the local mavend repo:
 ./gradlew clean assembleRelease publishToMavenLocal
 
 To use locally published library go to to root build.gradle > allProjects > repositories
