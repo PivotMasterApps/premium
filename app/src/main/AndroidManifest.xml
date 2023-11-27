@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.pivot.premium">
+    package="com.pivot.test">
 
     <application
         android:allowBackup="true"
@@ -11,13 +11,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".App"
+        android:name="com.pivot.test.App"
         android:theme="@style/Theme.PremiumLibrary"
         tools:targetApi="31">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.pivot.test.MainActivity">
         </activity>
 
-        <activity android:name=".PremiumSplashActivity"
+        <activity android:name="com.pivot.premium.PremiumSplashActivity"
             android:theme="@style/MySplashLayout"
             android:screenOrientation="portrait"
             android:exported="true">

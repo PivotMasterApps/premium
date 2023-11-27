@@ -13,7 +13,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.pivot.premium"
+        applicationId "com.pivot.test"
         minSdk 21
         targetSdk 33
         versionCode 1
