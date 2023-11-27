@@ -16,9 +16,7 @@ import androidx.lifecycle.MutableLiveData
 import com.pivot.premium.ads.AdManager
 import com.pivot.premium.billing.BillingManager
 import com.pivot.premium.purchases.PremiumActivity
-import com.suddenh4x.ratingdialog.AppRating
-import com.suddenh4x.ratingdialog.preferences.MailSettings
-import com.suddenh4x.ratingdialog.preferences.RatingThreshold
+import com.pivot.premium.rating.RatingDialog
 
 
 private const val TAG = "Premium"
@@ -53,11 +51,11 @@ object Premium {
     fun onAppOpen(activity: AppCompatActivity) {
         PreferenceManager.getDefaultSharedPreferences(mContext!!).apply {
             val opens = getInt("app_opens", 0)
-            if(mBillingManager?.mIsPremium?.value == BillingManager.PremiumState.NONE && listOf(0,2,5).contains(opens)) {
+            if(mBillingManager?.mIsPremium?.value != BillingManager.PremiumState.PREMIUM && listOf(0,2,5).contains(opens)) {
                 showPremium()
             } else if( opens % 3 == 0 &&
-                !AppRating.isDialogAgreed(mContext!!) &&
-                !AppRating.wasNeverButtonClicked(mContext!!)) {
+                RatingDialog.shouldShow(activity)
+                ) {
                 showRateUs(activity)
             }
             edit().putInt("app_opens", opens + 1).apply()
@@ -104,25 +102,25 @@ object Premium {
         onDismissed?.invoke()
     }
 
+    fun onRatingMoment(activity: AppCompatActivity) {
+        if(RatingDialog.shouldShow(activity)) {
+            RatingDialog(
+                activity,
+                builder = RatingDialog
+                    .Builder(activity)
+            ).show()
+        } else {
+            showInterstitial(activity)
+        }
+    }
+
     fun showRateUs(activity: AppCompatActivity) {
         Log.d(TAG, "showRateUs: ")
-        AppRating
-            .Builder(activity)
-            .setRatingThreshold(RatingThreshold.FOUR_AND_A_HALF)
-            .showRateNeverButtonAfterNTimes(R.string.rate_never, null, 2)
-            .setCancelable(true)
-            .setMailSettingsForFeedbackDialog(
-                MailSettings(
-                    mailAddress = "pivotmasterapps@gmail.com",
-                    subject = "Issue tracker",
-                    text = "Describe your issue..",
-                    errorToastMessage = "Something went wrong."
-                )
-            )
-            .setNoFeedbackButtonClickListener { showInterstitial(activity) }
-            .setDialogCancelListener { showInterstitial(activity) }
-            .setRateLaterButtonClickListener { showInterstitial(activity) }
-            .showNow()
+        RatingDialog(
+            activity,
+            builder = RatingDialog
+                .Builder(activity)
+        ).show()
     }
 
     fun splashFinished() {
@@ -134,7 +132,7 @@ object Premium {
     }
 
     fun showInterstitial(activity: Activity, onDismissed: (() -> Unit)? = null) {
-        if(mBillingManager?.mIsPremium?.value == BillingManager.PremiumState.NONE) {
+        if(mBillingManager?.mIsPremium?.value != BillingManager.PremiumState.PREMIUM) {
             AdManager.showInterstitial(activity, onDismissed)
         }
     }

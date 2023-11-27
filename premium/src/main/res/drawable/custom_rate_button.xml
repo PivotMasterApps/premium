@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/rounded_bg" android:state_pressed="false">
+        <ripple android:color="#64B5F6"> <!-- Set your desired ripple color -->
+            <item android:id="@android:id/background">
+                <shape>
+                    <corners android:radius="8dp" />
+                    <solid android:color="#2196F3" />
+                </shape>
+            </item>
+        </ripple>
+    </item>
+    <item android:drawable="@drawable/rounded_bg" android:state_pressed="true">
+        <ripple android:color="#64B5F6"> <!-- Set your desired ripple color -->
+            <item android:id="@android:id/background">
+                <shape>
+                    <corners android:radius="8dp" />
+                    <solid android:color="#1565C0" /> <!-- Set your desired pressed color -->
+                </shape>
+            </item>
+        </ripple>
+    </item>
+    <item android:bottom="2dp" android:left="0dp" android:right="0dp" android:top="0dp">
+        <shape>
+            <corners android:radius="8dp" />
+            <solid android:color="#33000000" /> <!-- Set your desired shadow color -->
+        </shape>
+    </item>
+</layer-list>

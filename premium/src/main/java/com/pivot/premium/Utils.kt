@@ -25,6 +25,37 @@ fun <T> getConfig(key: String, default: T): T {
     }
 }
 
+fun <T> Context.getPref(key: String, default: T): T {
+    val prefs = getSharedPreferences(Premium.PREMIUM_PREFS_NAME, 0)
+
+    return try {
+        return when(default) {
+            is Int -> prefs.getInt(key, default) as T
+            is String -> prefs.getString(key, default) as T
+            is Boolean -> prefs.getBoolean(key, default) as T
+            is Long -> prefs.getLong(key, default) as T
+            is Float -> prefs.getFloat(key, default) as T
+            else -> throw IllegalArgumentException("Type is not supported")
+        }
+    } catch (e: Exception) {
+        default
+    }
+}
+
+fun <T> Context.putPref(key: String, value: T) {
+    val editor = getSharedPreferences(Premium.PREMIUM_PREFS_NAME, 0).edit()
+        when(value) {
+            is Int -> editor.putInt(key, value)
+            is String -> editor.putString(key, value)
+            is Boolean -> editor.putBoolean(key, value)
+            is Long -> editor.putLong(key, value)
+            is Float -> editor.putFloat(key, value)
+            else -> throw IllegalArgumentException("Type is not supported")
+        }
+
+    editor.apply()
+}
+
 fun Context.sendEvent(event: String, bundle: Bundle? = null) {
     FirebaseAnalytics.getInstance(this).logEvent(event, bundle)
 }

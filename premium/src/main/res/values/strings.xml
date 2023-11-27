@@ -21,7 +21,8 @@
     <string name="terms_link">https://pivotmasterapps.github.io/terms/</string>
     <string name="eule_text"> By continuing you accept our <![CDATA[ <a href="%1$s">Privacy Policy</a>]]> and <![CDATA[<a href="%2$s">Terms Of Use</a>]]>.</string>
 
-    <string name="rating_dialog_experience">How was your experience with us?</string>
+    <string name="rating_dialog_experience">Do you like \n%1$s?</string>
+    <string name="rating_dialog_experience_body">We always try to improve our app experience.\nWe will really appreciate if you can rate us</string>
     <string name="rating_dialog_maybe_later">Maybe later</string>
     <string name="rating_dialog_never">Never</string>
     <string name="rating_dialog_feedback_title">Feedback</string>
@@ -39,4 +40,6 @@
     <string name="premium_subscription_id">subscription_offer</string>
     <string name="renew_text">Renews automatically, cancel anytime</string>
     <string name="premium_text_subtitle">Unlimited Access</string>
+    <string name="rate">Rate Us</string>
+    <string name="rating_dialog_experience_directions">The best we can get</string>
 </resources>

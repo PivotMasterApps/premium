@@ -12,8 +12,6 @@
 
         <include layout="@layout/layout_rating" />
 
-        <include layout="@layout/layout_feedback" />
-
     </FrameLayout>
 
 </ScrollView>
