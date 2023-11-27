@@ -21,4 +21,15 @@ jobs:
       - name: Build and publish library
         run: |
           ./gradlew clean build
+
+      - name: Debug Gradle Properties
+        run: cat ~/.gradle/gradle.properties
+
+      - name: Publish to GitHub Packages
+        run: |
+          echo "//maven.pkg.github.com/PivotMasterApps/premium/:username=${{ secrets.USERNAME_GITHUB }}" > ~/.gradle/gradle.properties
+          echo "//maven.pkg.github.com/PivotMasterApps/premium/:password=${{ secrets.TOKEN_GITHUB }}" >> ~/.gradle/gradle.properties
           ./gradlew publish
+        env:
+          USERNAME_GITHUB: ${{ secrets.USERNAME_GITHUB }}
+          TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}

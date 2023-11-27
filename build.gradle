@@ -16,7 +16,7 @@ static def getGitBranchName() {
     branch
 }
 
-ext.getPhArchiveBaseName = {
+ext.getPremiumArchiveBaseName = {
     return "premium-${getLibraryVersion()}"
 }
 

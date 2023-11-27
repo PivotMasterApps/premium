@@ -45,7 +45,7 @@ publishing {
             groupId GROUP_ID
             artifactId ARTIFACT_ID
             version VERSION_NAME
-            artifact("$buildDir/outputs/aar/${getPhArchiveBaseName()}-release.aar")
+            artifact("$buildDir/outputs/aar/${getPremiumArchiveBaseName()}-release.aar")
             artifact(sourceJar)
             pom.withXml {
                 def dependenciesNode = asNode().appendNode('dependencies')
