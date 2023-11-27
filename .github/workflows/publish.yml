@@ -25,8 +25,8 @@ jobs:
 
       - name: Publish to GitHub Packages
         run: |
-          echo "//maven.pkg.github.com/PivotMasterApps/premium/:username=${{ github.actor }}" > ~/.gradle/gradle.properties
-          echo "//maven.pkg.github.com/PivotMasterApps/premium/:password=${{ secrets.GITHUB_TOKEN }}" >> ~/.gradle/gradle.properties
+          echo "//maven.pkg.github.com/PivotMasterApps/premium/:username=${{ github.USERNAME_GITHUB }}" > ~/.gradle/gradle.properties
+          echo "//maven.pkg.github.com/PivotMasterApps/premium/:password=${{ secrets.TOKEN_GITHUB }}" >> ~/.gradle/gradle.properties
           ./gradlew publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
