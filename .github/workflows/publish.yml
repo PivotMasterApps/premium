@@ -2,7 +2,7 @@ name: Publish Android Library
 
 on:
   push:
-    branches: [master, develop, ci_attemp2]
+    branches: '**/**'
 
 jobs:
   publish:
