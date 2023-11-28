@@ -1,5 +1,6 @@
 package com.pivot.premium.rating
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -44,7 +45,7 @@ import kotlin.Exception
  */
 
 class RatingDialog(
-    val activity: AppCompatActivity,
+    val activity: Activity,
     private val builder: Builder
 ) : Dialog(activity),
     OnRatingBarChangeListener, View.OnClickListener {
@@ -242,7 +243,7 @@ class RatingDialog(
         }
     }
 
-    class Builder(private val activity: AppCompatActivity) {
+    class Builder(private val activity: Activity) {
 
         // listeners
         internal var ratingThresholdClearedListener: ((dialog: RatingDialog?, rating: Float, thresholdCleared: Boolean) -> Unit)? = null

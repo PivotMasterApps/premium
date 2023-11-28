@@ -99,7 +99,7 @@ object Premium {
         onDismissed?.invoke()
     }
 
-    fun onRatingMoment(activity: AppCompatActivity) {
+    fun onRatingMoment(activity: Activity) {
         if(RatingDialog.shouldShow(activity)) {
             RatingDialog(
                 activity,
