@@ -173,7 +173,7 @@ object Premium {
         }
     }
 
-    fun isPremium() = mBillingManager?.mIsPremium
+    fun isPremium() = mBillingManager?.mIsPremium?.value == BillingManager.PremiumState.PREMIUM
 
     data class Configuration(
         val bannerAdUnit: String,
