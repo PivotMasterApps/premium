@@ -30,8 +30,6 @@ object Premium {
     var mBillingManager: BillingManager? = null
     var onDismissed: (() -> Unit)? = null
 
-    enum class WhatToShow {NONE, INTERSTITIAL, RATING}
-
     fun initialize(
         context: Context,
         mainActivity: Class<out Activity>,
