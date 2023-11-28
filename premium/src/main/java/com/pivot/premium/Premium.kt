@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -29,6 +30,7 @@ object Premium {
     lateinit var mConfiguration: Configuration
     var mBillingManager: BillingManager? = null
     var onDismissed: (() -> Unit)? = null
+    lateinit var preferences: SharedPreferences
 
     fun initialize(
         context: Context,
@@ -40,6 +42,7 @@ object Premium {
         mConfiguration = configuration
         mMainActivity = mainActivity
         mContext = context
+        preferences = context.getSharedPreferences(PREMIUM_PREFS_NAME, 0)
         initializeLifecycle()
         AdManager.initialize(context)
         initializeBilling()
