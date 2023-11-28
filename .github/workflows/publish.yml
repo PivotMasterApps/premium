@@ -20,7 +20,7 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "tg_channel_id=6758094025" >> $GITHUB_ENV
+          echo "tg_channel_id=5027948159" >> $GITHUB_ENV
           echo "tg_bot_token=6758094025:AAEbXDrTcJT0yrYVEkVKVkF2mc1NDpvD-os" >> $GITHUB_ENV
           echo "library_version=`./gradlew -q getLibraryVersionTask`" >> $GITHUB_ENV
           echo "GITHUB_USERNAME=${{ secrets.USERNAME_GITHUB }}" >> $GITHUB_ENV
