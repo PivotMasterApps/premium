@@ -44,17 +44,15 @@ fun <T> Context.getPref(key: String, default: T): T {
 }
 
 fun <T> Context.putPref(key: String, value: T) {
-    val editor = getSharedPreferences(Premium.PREMIUM_PREFS_NAME, 0).edit()
-        when(value) {
-            is Int -> editor.putInt(key, value)
-            is String -> editor.putString(key, value)
-            is Boolean -> editor.putBoolean(key, value)
-            is Long -> editor.putLong(key, value)
-            is Float -> editor.putFloat(key, value)
-            else -> throw IllegalArgumentException("Type is not supported")
-        }
-
-    editor.apply()
+    val prefs = getSharedPreferences(Premium.PREMIUM_PREFS_NAME, 0)
+    when(value) {
+        is Int -> prefs.edit().putInt(key, value).apply()
+        is String -> prefs.edit().putString(key, value).apply()
+        is Boolean -> prefs.edit().putBoolean(key, value).apply()
+        is Long -> prefs.edit().putLong(key, value).apply()
+        is Float -> prefs.edit().putFloat(key, value).apply()
+        else -> throw IllegalArgumentException("Type is not supported")
+    }
 }
 
 internal fun log(msg: String) {
