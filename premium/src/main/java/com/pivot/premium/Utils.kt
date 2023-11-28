@@ -43,8 +43,6 @@ fun <T> Context.getPref(key: String, default: T): T {
     }
 }
 
-fun prefs() = Premium.preferences
-
 fun <T> Context.putPref(key: String, value: T) {
     val prefs = getSharedPreferences(Premium.PREMIUM_PREFS_NAME, 0)
     when(value) {

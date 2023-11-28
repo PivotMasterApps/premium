@@ -30,7 +30,6 @@ object Premium {
     lateinit var mConfiguration: Configuration
     var mBillingManager: BillingManager? = null
     var onDismissed: (() -> Unit)? = null
-    lateinit var preferences: SharedPreferences
 
     fun initialize(
         context: Context,
@@ -42,7 +41,6 @@ object Premium {
         mConfiguration = configuration
         mMainActivity = mainActivity
         mContext = context
-        preferences = context.getSharedPreferences(PREMIUM_PREFS_NAME, 0)
         initializeLifecycle()
         AdManager.initialize(context)
         initializeBilling()
