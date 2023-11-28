@@ -20,20 +20,37 @@ jobs:
 
       - name: Set environment variables
         run: |
+          echo "tg_channel_id=5027948159" >> $GITHUB_ENV
+          echo "tg_bot_token=6758094025:AAEbXDrTcJT0yrYVEkVKVkF2mc1NDpvD-os" >> $GITHUB_ENV
+          echo "library_version=`./gradlew -q getLibraryVersionTask`" >> $GITHUB_ENV
           echo "GITHUB_USERNAME=${{ secrets.USERNAME_GITHUB }}" >> $GITHUB_ENV
           echo "GITHUB_TOKEN=${{ secrets.TOKEN_GITHUB }}" >> $GITHUB_ENV
           echo "tokens is ${{ secrets.TOKEN_GITHUB }}"
+          echo "//maven.pkg.github.com/PivotMasterApps/premium/:username=\${{ secrets.USERNAME_GITHUB }}" >> $GITHUB_ENV
+          echo "//maven.pkg.github.com/PivotMasterApps/premium/:password=\${{ secrets.TOKEN_GITHUB }}" >> $GITHUB_ENV
 
       - name: Build and publish library
         run: |
-          ./gradlew clean build
-          ./gradlew publishToMavenLocal
-
-      - name: Publish to GitHub Packages
+          if ./gradlew clean assembleRelease; then
+            if ./gradlew publish; then
+                echo "gradlew_success=true" >> $GITHUB_ENV
+            else
+                echo "gradlew_success=false" >> $GITHUB_ENV 
+            fi
+          else
+            echo "gradlew_success=false" >> $GITHUB_ENV
+          fi
+      - name: Notify in telegram
         run: |
-          echo "//maven.pkg.github.com/PivotMasterApps/premium/:username=\${{ secrets.USERNAME_GITHUB }}" >> $GITHUB_ENV
-          echo "//maven.pkg.github.com/PivotMasterApps/premium/:password=\${{ secrets.TOKEN_GITHUB }}" >> $GITHUB_ENV
-          ./gradlew publish
+          TELEGRAM_BOT_TOKEN=${{ env.tg_bot_token }}
+          TELEGRAM_CHAT_ID=${{ secrets.tg_channel_id }}
+          MESSAGE="Built version, successful = ${{ env.gradlew_success }}"
+          
+          curl -s -X POST \
+            https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage \
+            -d chat_id=$TELEGRAM_CHAT_ID \
+            -d text="$MESSAGE"
+
         env:
           GITHUB_USERNAME: ${{ secrets.USERNAME_GITHUB }}
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
