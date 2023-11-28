@@ -34,6 +34,7 @@ import com.pivot.premium.R
 import com.pivot.premium.ads.banners.px
 import com.pivot.premium.getConfig
 import com.pivot.premium.getPref
+import com.pivot.premium.log
 import com.pivot.premium.putPref
 import kotlin.Exception
 
@@ -53,11 +54,12 @@ class RatingDialog(
 
         fun shouldShow(context: Context): Boolean {
             if(context.getPref("user_rating", -1) != -1) {
+                log("User already rated")
                 return false
             }
 
-            val lastTimeShown = context.getPref("last_time_rating_shown", 0)
-            if(System.currentTimeMillis() - lastTimeShown < getConfig("rating_capping", 120) * 1000) {
+            val lastTimeShown = context.getPref("last_time_rating_shown", 0f)
+            if(System.currentTimeMillis() - lastTimeShown > getConfig("rating_capping", 120) * 1000) {
                 context.putPref("last_time_rating_shown", System.currentTimeMillis())
                 return true
             }
@@ -175,6 +177,7 @@ class RatingDialog(
     }
 
     private fun onPositiveButtonClick() {
+        log("Rating submitted with ${ratingBar?.rating}")
         context.putPref("user_rating", (ratingBar?.rating ?: -1f).toInt())
         if((ratingBar?.rating ?: 0f) >= DEFAULT_THRESHOLD) {
             dismiss()

@@ -3,6 +3,7 @@ package com.pivot.premium
 import android.content.Context
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 
@@ -54,6 +55,12 @@ fun <T> Context.putPref(key: String, value: T) {
         }
 
     editor.apply()
+}
+
+internal fun log(msg: String) {
+    if(Premium.mConfiguration.debug) {
+        Log.d(Premium.TAG, msg)
+    }
 }
 
 fun Context.sendEvent(event: String, bundle: Bundle? = null) {

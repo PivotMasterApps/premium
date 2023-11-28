@@ -18,12 +18,11 @@ import com.pivot.premium.billing.BillingManager
 import com.pivot.premium.purchases.PremiumActivity
 import com.pivot.premium.rating.RatingDialog
 
-
-private const val TAG = "Premium"
 @SuppressLint("StaticFieldLeak")
 object Premium {
 
     const val PREMIUM_PREFS_NAME = "premium_shared_preferences"
+    const val TAG = "Premium"
 
     private var mContext: Context? = null
     lateinit  var mMainActivity: Class<out Activity>
@@ -179,6 +178,7 @@ object Premium {
     data class Configuration(
         val bannerAdUnit: String,
         val interstitialAdUnit: String,
-        val showTestAds: Boolean = false
+        val showTestAds: Boolean = false,
+        val debug: Boolean = false
     ){}
 }
