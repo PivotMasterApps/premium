@@ -43,7 +43,7 @@ jobs:
       - name: Notify in telegram
         run: |
           TELEGRAM_BOT_TOKEN=${{ env.tg_bot_token }}
-          TELEGRAM_CHAT_ID=${{ secrets.tg_channel_id }}
+          TELEGRAM_CHAT_ID=${{ env.tg_channel_id }}
           MESSAGE="Built version, successful = ${{ env.gradlew_success }}"
           
           curl -s -X POST \
