@@ -60,10 +60,12 @@ class RatingDialog(
             }
 
             val lastTimeShown = context.getPref("last_time_rating_shown", 0f)
-            if(System.currentTimeMillis() - lastTimeShown > getConfig("rating_capping", 120) * 1000) {
+            log("Last time rating shown = $lastTimeShown")
+            if(System.currentTimeMillis() - lastTimeShown > (getConfig("rating_capping", 120) * 1000)) {
                 context.putPref("last_time_rating_shown", System.currentTimeMillis())
                 return true
             }
+            log("Rating capped")
 
             return false
         }
