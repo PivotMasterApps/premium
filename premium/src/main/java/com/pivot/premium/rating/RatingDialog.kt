@@ -208,12 +208,14 @@ class RatingDialog(
     }
 
     private fun showInAppReview(onCompleted: (Boolean) -> Unit) {
+        log("Try to show inAppReview")
         try {
             val manager = ReviewManagerFactory.create(context)
             val request = manager.requestReviewFlow()
             request.addOnCompleteListener { task ->
                 try {
                     if (task.isSuccessful) {
+                        log("Try to show inAppReview succesfull")
                         // We got the ReviewInfo object
                         val reviewInfo = task.result
                         val flow = manager.launchReviewFlow(activity, reviewInfo)
@@ -221,16 +223,19 @@ class RatingDialog(
                             onCompleted(true)
                         }
                     } else {
+                        log("Try to show inAppReview unsuccesfull ${(task.getException() as ReviewException).message}")
                         // There was some problem, log or handle the error code.
                         @ReviewErrorCode val reviewErrorCode =
                             (task.getException() as ReviewException).errorCode
                         onCompleted(false)
                     }
                 } catch (e: Exception) {
+                    log("Try to show inAppReview exception ${e.message}")
                     onCompleted(false)
                 }
             }
         } catch (e: Exception) {
+            log("Try to show inAppReview exception2 ${e.message}")
             onCompleted(false)
         }
     }
