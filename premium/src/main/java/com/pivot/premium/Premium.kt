@@ -55,6 +55,8 @@ object Premium {
                 RatingDialog.shouldShow(activity)
                 ) {
                 showRateUs(activity)
+            } else {
+                showInterstitial(activity)
             }
             edit().putInt("app_opens", opens + 1).apply()
         }

@@ -36,7 +36,7 @@ open class PremiumSplashActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.premium_splash_ic).background = applicationInfo.loadIcon(packageManager)
 
         CoroutineScope(Dispatchers.Main).launch {
-            delay(getConfig("splash_delay", 2500))
+            delay(getConfig("splash_delay", 3000))
             Premium.splashFinished()
             finish()
         }

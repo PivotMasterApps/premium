@@ -5,7 +5,7 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
 }
 
-def LIBRARY_VERSION = "2.0.1"
+def LIBRARY_VERSION = "2.0.2"
 
 static def getGitBranchName() {
     def branch = ""
