@@ -21,6 +21,7 @@ import com.pivot.premium.sendEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PremiumActivity : AppCompatActivity() {
 
@@ -53,7 +54,9 @@ class PremiumActivity : AppCompatActivity() {
 
         Premium.mBillingManager?.mIsPremium?.observe(this) {
             if(it == BillingManager.PremiumState.PREMIUM) {
-                Toast.makeText(this, getString(R.string.premium_toast_success), Toast.LENGTH_SHORT).show()
+                runOnUiThread {
+                    Toast.makeText(this, getString(R.string.premium_toast_success), Toast.LENGTH_SHORT).show()
+                }
                 endActivity()
             }
         }
