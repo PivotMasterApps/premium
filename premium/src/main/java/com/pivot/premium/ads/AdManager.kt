@@ -18,6 +18,7 @@ object AdManager {
     private var mContext: Context? = null
     lateinit var interstitials: AdmobInterstitial
     lateinit var rewardedAds: RewardedLoader
+    private var initialized = false
 
     suspend fun initialize(context: Context) {
         mContext = context
@@ -28,10 +29,13 @@ object AdManager {
                 rewardedAds = RewardedLoader(context)
                 rewardedAds.loadAd()
             }
+            initialized = true
         }
     }
 
     fun showRewarded(activity: Activity, onDismissed: (Boolean) -> Unit) {
+        if(!initialized) return
+
         if(Premium.mConfiguration.enableRewarded) {
             rewardedAds.showAd(activity, onDismissed)
         } else {
@@ -40,10 +44,12 @@ object AdManager {
     }
 
     fun showInterstitial(activity: Activity, onDismissed: (() -> Unit)? = null) {
+        if(!initialized) return
         interstitials.showAd(activity, onDismissed)
     }
 
     fun loadBanner(context: Context, adSize: AdSize) {
+        if(!initialized) return
         DFPBannerLoader(context).loadAd(adSize)
     }
 }
