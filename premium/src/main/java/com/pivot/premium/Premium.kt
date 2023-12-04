@@ -180,6 +180,7 @@ object Premium {
         val bannerAdUnit: String,
         val interstitialAdUnit: String,
         val showTestAds: Boolean = false,
+        val enableRewarded: Boolean = false,
         val debug: Boolean = false
     ){}
 }
