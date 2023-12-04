@@ -18,6 +18,9 @@ import com.pivot.premium.ads.AdManager
 import com.pivot.premium.billing.BillingManager
 import com.pivot.premium.purchases.PremiumActivity
 import com.pivot.premium.rating.RatingDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @SuppressLint("StaticFieldLeak")
 object Premium {
@@ -41,9 +44,15 @@ object Premium {
         mConfiguration = configuration
         mMainActivity = mainActivity
         mContext = context
-        initializeLifecycle()
-        AdManager.initialize(context)
-        initializeBilling()
+        initSdk()
+    }
+
+    private fun initSdk() {
+        CoroutineScope(Dispatchers.Default).launch {
+            initializeLifecycle()
+            AdManager.initialize(mContext!!)
+            initializeBilling()
+        }
     }
 
     fun onAppOpen(activity: AppCompatActivity) {

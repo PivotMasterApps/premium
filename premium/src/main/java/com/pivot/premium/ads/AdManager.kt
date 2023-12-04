@@ -19,7 +19,7 @@ object AdManager {
     lateinit var interstitials: AdmobInterstitial
     lateinit var rewardedAds: RewardedLoader
 
-    fun initialize(context: Context) {
+    suspend fun initialize(context: Context) {
         mContext = context
         MobileAds.initialize(context) {
             interstitials = AdmobInterstitial(context)
