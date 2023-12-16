@@ -18,6 +18,9 @@ import com.pivot.premium.ads.AdManager
 import com.pivot.premium.billing.BillingManager
 import com.pivot.premium.purchases.PremiumActivity
 import com.pivot.premium.rating.RatingDialog
+import com.revenuecat.purchases.LogLevel
+import com.revenuecat.purchases.Purchases
+import com.revenuecat.purchases.PurchasesConfiguration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -190,6 +193,7 @@ object Premium {
         val interstitialAdUnit: String,
         val showTestAds: Boolean = false,
         val enableRewarded: Boolean = false,
-        val debug: Boolean = false
+        val debug: Boolean = false,
+        val revenueCatAppId: String? = null
     ){}
 }

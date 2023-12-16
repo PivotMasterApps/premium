@@ -29,15 +29,18 @@ class PremiumActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.custom_primium_dialog)
 
-        if(BuildConfig.DEBUG) {
-            findViewById<ProgressBar>(R.id.premium_pb_one_time).visibility = View.GONE
-            findViewById<TextView>(R.id.pricing_text).text =
-                resources.getString(R.string.premium_subscription_price_trial, "3", "KR 20", "month")
-        }
+        Premium.mBillingManager?.premiumOffer()?.observe(this) { offer ->
+            findViewById<View>(R.id.premium_pb_one_time).isVisible = (offer == null)
+            if(offer == null) return@observe
 
-        Premium.mBillingManager?.mPrice?.observe(this) {
-            findViewById<TextView>(R.id.pricing_text).text = it
-            findViewById<View>(R.id.premium_pb_one_time).isVisible = it.isEmpty()
+            var pricingTxt = ""
+
+            if(offer.freeTrialPeriodUnit.isNotEmpty()) {
+                pricingTxt += "${offer.freeTrialPeriodValue} ${offer.formattedFreeUnit()} free, then "
+            }
+
+            pricingTxt += "${offer.price} / ${offer.formattedBilledUnit()}"
+            findViewById<TextView>(R.id.pricing_text).text = pricingTxt
         }
 
         findViewById<AppCompatImageView>(R.id.premium_close).setOnClickListener {
@@ -47,7 +50,7 @@ class PremiumActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.premium_one_time).setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                Premium.mBillingManager?.launch(this@PremiumActivity)
+                val result = Premium.mBillingManager?.launch(this@PremiumActivity)
                 sendEvent("trial_clicked")
             }
         }

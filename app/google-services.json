@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:400730377732:android:f9a4594c5520da1b8c2f51",
         "android_client_info": {
-          "package_name": "com.pivot.test"
+          "package_name": "com.pivotapps.recoverdeletedmessages"
         }
       },
       "oauth_client": [
