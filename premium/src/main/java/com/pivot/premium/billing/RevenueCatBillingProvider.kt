@@ -38,6 +38,7 @@ class RevenueCatBillingProvider(
                 Premium.mConfiguration.revenueCatAppId!!
             ).build()
         )
+        a.updatedCustomerInfoListener = this
         onReady()
     }
 
@@ -101,22 +102,20 @@ class RevenueCatBillingProvider(
                         cont.resume(null)
                         return@getOfferingsWith
                     }
-                    val offer = offerings.all.values.first()
-                    offer.availablePackages.forEach { p ->
+                    try {
+                        val p = offerings.all.values.first().availablePackages.first()
                         packageToPurchase = p
-                        try {
-                            val freeTrialPhrase = p.product.subscriptionOptions?.freeTrial?.freePhase
-                            val billedPhrase = p.product.subscriptionOptions?.defaultOffer?.billingPeriod
-                            val premiumOffer = PremiumOffer(
-                                price = p.product.price.formatted,
-                                freeTrialPeriodValue = freeTrialPhrase?.billingPeriod?.value ?: -1,
-                                freeTrialPeriodUnit = freeTrialPhrase?.billingPeriod?.unit?.name ?: "",
-                                billingPeriodValue = billedPhrase?.value!!,
-                                billingPeriodUnit = billedPhrase.unit.name)
-                            cont.resume(premiumOffer)
-                        } catch (e: Exception) {
-                            cont.resume(null)
-                        }
+                        val freeTrialPhrase = p.product.subscriptionOptions?.freeTrial?.freePhase
+                        val billedPhrase = p.product.subscriptionOptions?.defaultOffer?.billingPeriod
+                        val premiumOffer = PremiumOffer(
+                            price = p.product.price.formatted,
+                            freeTrialPeriodValue = freeTrialPhrase?.billingPeriod?.value ?: -1,
+                            freeTrialPeriodUnit = freeTrialPhrase?.billingPeriod?.unit?.name ?: "",
+                            billingPeriodValue = billedPhrase?.value!!,
+                            billingPeriodUnit = billedPhrase.unit.name)
+                        cont.resume(premiumOffer)
+                    } catch (e: Exception) {
+                        cont.resume(null)
                     }
                 })
         }
