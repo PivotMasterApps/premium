@@ -96,8 +96,8 @@ class GooglePlayBillingProvider(
                     productDetails = details[0]
                     val subscriptionOfferDetails = productDetails?.subscriptionOfferDetails?.first()!!
                     val phases = subscriptionOfferDetails.pricingPhases.pricingPhaseList
-                    val freePhase = if(phases.size > 1) subscriptionOfferDetails.pricingPhases.pricingPhaseList[1] else null
-                    val billedPhase = subscriptionOfferDetails.pricingPhases.pricingPhaseList[if(phases.size > 1) 1 else 0]
+                    val freePhase = phases.firstOrNull { it.priceAmountMicros == 0L }
+                    val billedPhase = phases.first { it.priceAmountMicros > 0L }
                     cont.resume(
                         PremiumOffer(
                             price = billedPhase.formattedPrice,

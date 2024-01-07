@@ -17,7 +17,7 @@ class App: Application() {
                 bannerAdUnit = "ca-app-pub-3940256099942544/6300978111",
                 interstitialAdUnit = "ca-app-pub-3940256099942544/1033173712",
                 debug = BuildConfig.DEBUG,
-                revenueCatAppId = "goog_ZAZWrJwIprdwFTbMpsqbwWiIUFe"
+                revenueCatAppId = ""//"goog_ZAZWrJwIprdwFTbMpsqbwWiIUFe"
             )
         )
     }
