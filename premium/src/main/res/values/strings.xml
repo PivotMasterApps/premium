@@ -37,7 +37,7 @@
     <string name="app_name">App Name</string>
     <string name="banner_ad_unit">ca-app-pub-3940256099942544/6300978111</string>
     <string name="no_app_resolved">No app found</string>
-    <string name="premium_subscription_id">revenuecat_subscription_offer</string>
+    <string name="premium_subscription_id">no_trial_subscription</string>
     <string name="renew_text">Renews automatically, cancel anytime</string>
     <string name="premium_text_subtitle">Unlock all features</string>
     <string name="premium_text_title">GO PRO!</string>

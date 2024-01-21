@@ -7,6 +7,7 @@ import android.preference.PreferenceManager
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -37,6 +38,8 @@ class PremiumActivity : AppCompatActivity() {
 
             if(offer.freeTrialPeriodUnit.isNotEmpty()) {
                 pricingTxt += "${offer.freeTrialPeriodValue} ${offer.formattedFreeUnit()} free, then "
+            } else {
+                findViewById<Button>(R.id.premium_one_time).text = "TRY NOW!"
             }
 
             pricingTxt += "${offer.price} / ${offer.formattedBilledUnit()}"
