@@ -72,6 +72,7 @@ dependencies {
     api("com.google.android.play:review-ktx:2.0.1")
 
     api 'com.revenuecat.purchases:purchases:7.0.0'
+    implementation 'androidx.lifecycle:lifecycle-process:2.7.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

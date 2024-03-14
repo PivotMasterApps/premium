@@ -21,3 +21,6 @@ Premium activity:
 Interstitials:
 - add admob appId string: "admob_app_id"
 - add interstitial adUnit: "interstitial_key"
+
+Steps of integration:
+- 

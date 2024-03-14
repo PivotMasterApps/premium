@@ -13,7 +13,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.pivot.premium.ads.AdManager
 import com.pivot.premium.billing.BillingManager
 import com.pivot.premium.purchases.PremiumActivity
@@ -88,6 +93,21 @@ object Premium {
             override fun onActivityStopped(p0: Activity) {}
             override fun onActivitySaveInstanceState(p0: Activity, p1: Bundle) {}
             override fun onActivityDestroyed(p0: Activity) {}
+        })
+
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object: DefaultLifecycleObserver {
+
+            override fun onCreate(owner: LifecycleOwner) {
+                super.onCreate(owner)
+            }
+
+            override fun onStart(owner: LifecycleOwner) {
+                super.onStart(owner)
+            }
+
+            override fun onStop(owner: LifecycleOwner) {
+                super.onStop(owner)
+            }
         })
     }
 
