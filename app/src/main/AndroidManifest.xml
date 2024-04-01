@@ -13,18 +13,11 @@
         android:name="com.pivot.test.App"
         android:theme="@style/Theme.PremiumLibrary"
         tools:targetApi="31">
-        <activity android:name="com.pivot.test.MainActivity">
+
+        <activity android:name="com.pivot.test.MainActivity"
+            android:exported="true">
         </activity>
 
-        <activity android:name="com.pivot.premium.PremiumSplashActivity"
-            android:theme="@style/MySplashLayout"
-            android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

@@ -7,6 +7,16 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application>
+
+        <activity android:name=".PremiumSplashActivity"
+            android:exported="true"
+            android:theme="@style/MySplashLayout">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".purchases.PremiumActivity"
             android:exported="false"

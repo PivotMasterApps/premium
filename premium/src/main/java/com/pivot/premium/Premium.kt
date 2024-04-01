@@ -28,6 +28,7 @@ import com.revenuecat.purchases.Purchases
 import com.revenuecat.purchases.PurchasesConfiguration
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @SuppressLint("StaticFieldLeak")
@@ -64,18 +65,31 @@ object Premium {
     }
 
     fun onAppOpen(activity: AppCompatActivity) {
-        PreferenceManager.getDefaultSharedPreferences(mContext!!).apply {
-            val opens = getInt("app_opens", 0)
-            if(mBillingManager?.mIsPremium?.value != BillingManager.PremiumState.PREMIUM && listOf(0,2,5).contains(opens)) {
-                showPremium()
-            } else if( opens % 3 == 0 &&
-                RatingDialog.shouldShow(activity)
-                ) {
-                showRateUs(activity)
-            } else {
-                showInterstitial(activity)
+        CoroutineScope(Dispatchers.IO).launch {
+            PreferenceManager.getDefaultSharedPreferences(mContext!!).apply {
+                val opens = getInt("app_opens", 0)
+                if(mBillingManager?.mIsPremium?.value != BillingManager.PremiumState.PREMIUM && listOf(0,2,5).contains(opens)) {
+                    showPremium()
+                } else if( opens % 3 == 0 &&
+                    RatingDialog.shouldShow(activity)
+                    ) {
+                    showRateUs(activity)
+                } else {
+                    showInterstitial(activity)
+                }
+                edit().putInt("app_opens", opens + 1).apply()
             }
-            edit().putInt("app_opens", opens + 1).apply()
+        }
+    }
+
+    fun onBackFromBackground(){
+        Log.d(TAG, "onBackFromBackground: ")
+        val appResumes = mContext?.getPref("background_resumes", 0) ?: 0
+        mContext?.putPref("background_resumes", appResumes + 1)
+
+        val modulo = if(appResumes < 3) 1 else if(appResumes < 10) 2 else if(appResumes<30) 3 else 5
+        if(appResumes % modulo == 0) {
+            showPremium()
         }
     }
 
@@ -95,20 +109,29 @@ object Premium {
             override fun onActivityDestroyed(p0: Activity) {}
         })
 
-        ProcessLifecycleOwner.get().lifecycle.addObserver(object: DefaultLifecycleObserver {
+        GlobalScope.launch(Dispatchers.Main) {
+            ProcessLifecycleOwner.get().lifecycle.addObserver(object: DefaultLifecycleObserver {
 
-            override fun onCreate(owner: LifecycleOwner) {
-                super.onCreate(owner)
-            }
+                var isJustCreated = true
+                override fun onCreate(owner: LifecycleOwner) {
+                    super.onCreate(owner)
+                }
 
-            override fun onStart(owner: LifecycleOwner) {
-                super.onStart(owner)
-            }
+                override fun onStart(owner: LifecycleOwner) {
+                    super.onStart(owner)
+                    if(isJustCreated) {
+                        isJustCreated = false
+                        return
+                    }
 
-            override fun onStop(owner: LifecycleOwner) {
-                super.onStop(owner)
-            }
-        })
+                    onBackFromBackground()
+                }
+
+                override fun onStop(owner: LifecycleOwner) {
+                    super.onStop(owner)
+                }
+            })
+        }
     }
 
     fun showPremium() {
@@ -164,8 +187,10 @@ object Premium {
     }
 
     fun showInterstitial(activity: Activity, onDismissed: (() -> Unit)? = null) {
-        if(mBillingManager?.mIsPremium?.value != BillingManager.PremiumState.PREMIUM) {
-            AdManager.showInterstitial(activity, onDismissed)
+        CoroutineScope(Dispatchers.Main).launch {
+            if(mBillingManager?.mIsPremium?.value != BillingManager.PremiumState.PREMIUM) {
+                AdManager.showInterstitial(activity, onDismissed)
+            }
         }
     }
 
