@@ -171,11 +171,13 @@ object Premium {
 
     fun showRateUs(activity: AppCompatActivity) {
         Log.d(TAG, "showRateUs: ")
-        RatingDialog(
-            activity,
-            builder = RatingDialog
-                .Builder(activity)
-        ).show()
+        CoroutineScope(Dispatchers.Main).launch {
+            RatingDialog(
+                activity,
+                builder = RatingDialog
+                    .Builder(activity)
+            ).show()
+        }
     }
 
     fun splashFinished() {

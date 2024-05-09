@@ -153,16 +153,16 @@ class RatingDialog(
 
         ratingBar?.apply {
             onRatingBarChangeListener = this@RatingDialog
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                    val stars = progressDrawable as LayerDrawable
-                    stars.getDrawable(2).setColorFilter(rateStarColor, PorterDuff.Mode.SRC_ATOP)
-                    stars.getDrawable(1).setColorFilter(rateStarColor, PorterDuff.Mode.SRC_ATOP)
-                    val ratingBarBackgroundColor = R.color.secondaryTextColor
-                    stars.getDrawable(0).setColorFilter(ContextCompat.getColor(context, ratingBarBackgroundColor), PorterDuff.Mode.SRC_ATOP)
-                } else {
-                    val stars = progressDrawable
-                    DrawableCompat.setTint(stars, rateStarColor)
-                }
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+                val stars = progressDrawable as LayerDrawable
+                stars.getDrawable(2).setColorFilter(rateStarColor, PorterDuff.Mode.SRC_ATOP)
+                stars.getDrawable(1).setColorFilter(rateStarColor, PorterDuff.Mode.SRC_ATOP)
+                val ratingBarBackgroundColor = R.color.secondaryTextColor
+                stars.getDrawable(0).setColorFilter(ContextCompat.getColor(context, ratingBarBackgroundColor), PorterDuff.Mode.SRC_ATOP)
+            } else {
+                val stars = progressDrawable
+                DrawableCompat.setTint(stars, rateStarColor)
+            }
         }
 
         if (builder.ratingThresholdClearedListener == null) setRatingThresholdClearedListener()
